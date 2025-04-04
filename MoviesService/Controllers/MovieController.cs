@@ -22,6 +22,22 @@ public class MovieController : Controller
         _service = service;
     }
 
+    [HttpGet("GetMovie")]
+    public async Task<ActionResult> GetMovieAsync(Guid id)
+    {
+        try
+        {
+            var movie = await _service.GetAsync(id);
+            var movieDTO = _mapper.Map<Movie, MovieDTO>(movie);
+            return Ok(movieDTO);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, e.Message);
+            throw;
+        }
+    }
+
     [HttpGet("GetAllMovies")]
     public async Task<ActionResult> GetAllMoviesAsync()
     {
@@ -35,6 +51,21 @@ public class MovieController : Controller
         {
             _logger.LogError(e, e.Message);
             return BadRequest(e.Message);
+        }
+    }
+
+    [HttpDelete("DeleteMovie")]
+    public async Task<ActionResult> DeleteMovieAsync(Guid id)
+    {
+        try
+        {
+            await _service.DeleteAsync(id);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, e.Message);
+            throw;
         }
     }
 
@@ -52,6 +83,23 @@ public class MovieController : Controller
         {
             _logger.LogError(e, e.Message);
             return BadRequest(e.Message);
+        }
+    }
+
+    [HttpPatch("UpdateMovie")]
+    public async Task<ActionResult> UpdateMovieAsync([FromBody] MovieDTO entityDTO)
+    {
+        try
+        {
+            var entity = _mapper.Map<MovieDTO, Movie>(entityDTO);
+            var updatedEntity = await _service.UpdateAsync(entity);
+            var updatedEntityDTO = _mapper.Map<Movie, MovieDTO>(updatedEntity);
+            return Ok(updatedEntityDTO);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, e.Message);
+            throw;
         }
     }
 }
