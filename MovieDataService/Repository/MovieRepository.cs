@@ -1,9 +1,9 @@
 using Core.BaseEntities;
 using Microsoft.EntityFrameworkCore;
-using MoviesService.Entities;
-using MoviesService.Repository.Interfaces;
+using MovieDataService.Entities;
+using MovieDataService.Repository.Interfaces;
 
-namespace MoviesService.Repository;
+namespace MovieDataService.Repository;
 
 public class MovieRepository : BaseRepository<Movie>, IMovieRepository
 {

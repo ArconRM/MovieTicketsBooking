@@ -1,9 +1,8 @@
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
-using MoviesService.Entities;
-using MoviesService.Repository.EntityConfiguration;
+using MovieDataService.Entities;
 
-namespace MoviesService.Repository;
+namespace MovieDataService.Repository;
 
 public class MovieContext : DbContext
 {
@@ -12,7 +11,7 @@ public class MovieContext : DbContext
     public MovieContext(DbContextOptions<MovieContext> options) : base(options)
     {
     }
-    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

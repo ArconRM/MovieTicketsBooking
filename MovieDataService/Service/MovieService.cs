@@ -1,9 +1,9 @@
 using Core.BaseEntities;
 using Core.Interfaces;
-using MoviesService.Entities;
-using MoviesService.Services.Interfaces;
+using MovieDataService.Entities;
+using MovieDataService.Service.Interfaces;
 
-namespace MoviesService.Services;
+namespace MovieDataService.Service;
 
 public class MovieService : BaseService<Movie>, IMovieService
 {

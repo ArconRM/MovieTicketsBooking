@@ -1,12 +1,11 @@
 using AutoMapper;
 using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using MoviesService.AutoMapper;
-using MoviesService.Entities;
-using MoviesService.Repository;
-using MoviesService.Repository.Interfaces;
-using MoviesService.Services;
-using MoviesService.Services.Interfaces;
+using MovieDataService.AutoMapper;
+using MovieDataService.Entities;
+using MovieDataService.Repository;
+using MovieDataService.Service;
+using MovieDataService.Service.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +18,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IRepository<Movie>, MovieRepository>();
 builder.Services.AddScoped<IMovieService, MovieService>();
 
-builder.Services.AddDbContext<MovieContext>(options => options.UseNpgsql(builder.Configuration.GetSection("ConnectionString").Value));
+builder.Services.AddScoped<IRepository<Person>, PersonRepository>();
+builder.Services.AddScoped<IPersonService, PersonService>();
+
+builder.Services.AddDbContext<MovieContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetSection("MovieServiceConnectionString").Value));
+builder.Services.AddDbContext<PersonContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetSection("PersonServiceConnectionString").Value));
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 

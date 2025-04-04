@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MoviesService.Entities;
+using MovieDataService.Entities;
 
-namespace MoviesService.Repository.EntityConfiguration;
+namespace MovieDataService.Repository.EntityConfiguration;
 
-public class MovieConfiguration: IEntityTypeConfiguration<Movie>
+public class MovieConfiguration : IEntityTypeConfiguration<Movie>
 {
     public void Configure(EntityTypeBuilder<Movie> builder)
     {
@@ -18,6 +18,6 @@ public class MovieConfiguration: IEntityTypeConfiguration<Movie>
             .IsRequired();
 
         builder.Property(m => m.Description)
-            .HasMaxLength(255);
+            .HasMaxLength(1000);
     }
 }

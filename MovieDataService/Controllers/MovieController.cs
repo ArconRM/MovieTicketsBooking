@@ -1,10 +1,10 @@
 using AutoMapper;
 using Common.DTO;
 using Microsoft.AspNetCore.Mvc;
-using MoviesService.Entities;
-using MoviesService.Services.Interfaces;
+using MovieDataService.Entities;
+using MovieDataService.Service.Interfaces;
 
-namespace MoviesService.Controllers;
+namespace MovieDataService.Controllers;
 
 [Route("api/[controller]")]
 public class MovieController : Controller

@@ -1,8 +1,8 @@
 using AutoMapper;
 using Common.DTO;
-using MoviesService.Entities;
+using MovieDataService.Entities;
 
-namespace MoviesService.AutoMapper;
+namespace MovieDataService.AutoMapper;
 
 public class MappingProfile : Profile
 {
