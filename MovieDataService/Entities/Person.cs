@@ -1,6 +1,8 @@
 using Core.Interfaces;
 
 namespace MovieDataService.Entities;
+//TODO: файловый сервис на стримах
+//TODO: для взаимодействия между сервисами grpc + rabbitmq (не через eventmanager)
 
 public class Person : IEntityWithUUID
 {

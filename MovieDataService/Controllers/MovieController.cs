@@ -6,6 +6,8 @@ using MovieDataService.Service.Interfaces;
 
 namespace MovieDataService.Controllers;
 
+// TODO: убрать async из названия
+// TODO: интерфейсом резулта
 [Route("api/[controller]")]
 public class MovieController : Controller
 {

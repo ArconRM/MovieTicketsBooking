@@ -7,6 +7,7 @@ using MovieDataService.Repository;
 using MovieDataService.Service;
 using MovieDataService.Service.Interfaces;
 
+//TODO: В один контекст все
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
