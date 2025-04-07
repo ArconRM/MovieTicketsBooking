@@ -13,13 +13,21 @@ public class MovieController : Controller
 
     private readonly IMapper _mapper;
 
-    private readonly IMovieService _service;
+    private readonly IMovieService _movieService;
 
-    public MovieController(ILogger<MovieController> logger, IMapper mapper, IMovieService service)
+    private readonly IFromFileEntitySaverService _fromFileEntitySaverService;
+
+    public MovieController(
+        ILogger<MovieController> logger,
+        IMapper mapper,
+        IMovieService movieService,
+        IFromFileEntitySaverService fromFileEntitySaverService
+    )
     {
         _logger = logger;
         _mapper = mapper;
-        _service = service;
+        _movieService = movieService;
+        _fromFileEntitySaverService = fromFileEntitySaverService;
     }
 
     // Сам подставит токен
@@ -29,7 +37,7 @@ public class MovieController : Controller
     {
         try
         {
-            var movie = await _service.GetAsync(id, token);
+            var movie = await _movieService.GetAsync(id, token);
             var movieDTO = _mapper.Map<Movie, MovieDTO>(movie);
             return Ok(movieDTO);
         }
@@ -45,7 +53,7 @@ public class MovieController : Controller
     {
         try
         {
-            var movies = await _service.GetAllAsync(token);
+            var movies = await _movieService.GetAllAsync(token);
             var moviesDTO = _mapper.Map<IEnumerable<Movie>, IEnumerable<MovieDTO>>(movies);
             return Ok(moviesDTO);
         }
@@ -61,7 +69,7 @@ public class MovieController : Controller
     {
         try
         {
-            await _service.DeleteAsync(id, token);
+            await _movieService.DeleteAsync(id, token);
             return Ok();
         }
         catch (Exception e)
@@ -77,7 +85,7 @@ public class MovieController : Controller
         try
         {
             var entity = _mapper.Map<MovieDTO, Movie>(entityDTO);
-            var newEntity = await _service.CreateAsync(entity, token);
+            var newEntity = await _movieService.CreateAsync(entity, token);
             var newEntityDTO = _mapper.Map<Movie, MovieDTO>(newEntity);
             return Ok(newEntityDTO);
         }
@@ -94,7 +102,7 @@ public class MovieController : Controller
         try
         {
             var entity = _mapper.Map<MovieDTO, Movie>(entityDTO);
-            var updatedEntity = await _service.UpdateAsync(entity, token);
+            var updatedEntity = await _movieService.UpdateAsync(entity, token);
             var updatedEntityDTO = _mapper.Map<Movie, MovieDTO>(updatedEntity);
             return Ok(updatedEntityDTO);
         }
@@ -105,21 +113,24 @@ public class MovieController : Controller
         }
     }
 
-    // [HttpPost]
-    // public async Task<IActionResult> AddFile(IFormFile uploadedFile)
-    // {
-    //     if (uploadedFile != null)
-    //     {
-    //         // путь к папке Files
-    //         string path = "/Files/" + uploadedFile.FileName;
-    //         // сохраняем файл в папку Files в каталоге wwwroot
-    //         using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
-    //         {
-    //             await uploadedFile.CopyToAsync(fileStream);
-    //         }
-    //         FileModel file = new FileModel { Name = uploadedFile.FileName, Path = path };
-    //         _context.Files.Add(file);
-    //         _context.SaveChanges();
-    //     }
-    // }
+    [HttpPost("LoadMoviesFromFile")]
+    public async Task<IActionResult> AddFile(IFormFile file, CancellationToken token)
+    {
+        try
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("No file uploaded.");
+            }
+
+            using var stream = file.OpenReadStream();
+            var movies = await _fromFileEntitySaverService.SaveFromStreamAsync(stream, token);
+            return Ok(movies);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, e.Message);
+            throw;
+        }
+    }
 }

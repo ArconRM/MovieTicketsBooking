@@ -22,7 +22,8 @@ public class FromFileEntitySaverService : IFromFileEntitySaverService
 
         int count = 0;
         ConcurrentBag<Movie> savedMoviesBag = new();
-        Parallel.ForEachAsync(
+        // Нельзя общий контекст для нескольких потоков бля
+        await Parallel.ForEachAsync(
             movies,
             new ParallelOptions() { MaxDegreeOfParallelism = 4 },
             async (movie, parallelToken) =>
