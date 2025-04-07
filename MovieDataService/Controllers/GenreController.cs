@@ -6,6 +6,7 @@ using MovieDataService.Service.Interfaces;
 
 namespace MovieDataService.Controllers;
 
+[Route("api/[controller]")]
 public class GenreController : Controller
 {
     private readonly ILogger<PersonController> _logger;
