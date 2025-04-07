@@ -9,13 +9,13 @@ namespace MovieDataService.Controllers;
 [Route("api/[controller]")]
 public class GenreController : Controller
 {
-    private readonly ILogger<PersonController> _logger;
+    private readonly ILogger<GenreController> _logger;
 
     private readonly IMapper _mapper;
 
     private readonly IGenreService _service;
 
-    public GenreController(ILogger<PersonController> logger, IMapper mapper, IGenreService service)
+    public GenreController(ILogger<GenreController> logger, IMapper mapper, IGenreService service)
     {
         _logger = logger;
         _mapper = mapper;
