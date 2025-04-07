@@ -7,10 +7,10 @@ namespace MovieDataService.Repository;
 
 public class MovieRepository : BaseRepository<Movie>, IMovieRepository
 {
-    private readonly MovieContext _context;
+    private readonly MovieDataContext _dataContext;
 
-    public MovieRepository(MovieContext context) : base(context)
+    public MovieRepository(MovieDataContext dataContext) : base(dataContext)
     {
-        _context = context;
+        _dataContext = dataContext;
     }
 }

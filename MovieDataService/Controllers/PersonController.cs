@@ -22,12 +22,12 @@ public class PersonController : Controller
         _service = service;
     }
 
-    [HttpGet("GetPerson")]
-    public async Task<ActionResult> GetPersonAsync(Guid id)
+    [HttpGet(nameof(GetPerson))]
+    public async Task<IActionResult> GetPerson(Guid id, CancellationToken token)
     {
         try
         {
-            var person = await _service.GetAsync(id);
+            var person = await _service.GetAsync(id, token);
             var personDTO = _mapper.Map<Person, PersonDTO>(person);
             return Ok(personDTO);
         }
@@ -38,12 +38,12 @@ public class PersonController : Controller
         }
     }
 
-    [HttpGet("GetAllPersons")]
-    public async Task<ActionResult> GetAllPersonsAsync()
+    [HttpGet(nameof(GetAllPersons))]
+    public async Task<IActionResult> GetAllPersons(CancellationToken token)
     {
         try
         {
-            var persons = await _service.GetAllAsync();
+            var persons = await _service.GetAllAsync(token);
             var personsDTO = _mapper.Map<IEnumerable<Person>, IEnumerable<PersonDTO>>(persons);
             return Ok(personsDTO);
         }
@@ -54,12 +54,12 @@ public class PersonController : Controller
         }
     }
 
-    [HttpDelete("DeletePerson")]
-    public async Task<ActionResult> DeletePersonAsync(Guid id)
+    [HttpDelete(nameof(DeletePerson))]
+    public async Task<IActionResult> DeletePerson(Guid id, CancellationToken token)
     {
         try
         {
-            await _service.DeleteAsync(id);
+            await _service.DeleteAsync(id, token);
             return Ok();
         }
         catch (Exception e)
@@ -69,13 +69,13 @@ public class PersonController : Controller
         }
     }
 
-    [HttpPost("CreatePerson")]
-    public async Task<ActionResult> CreatePersonAsync([FromBody] PersonDTO entityDTO)
+    [HttpPost(nameof(CreatePerson))]
+    public async Task<IActionResult> CreatePerson([FromBody] PersonDTO entityDTO, CancellationToken token)
     {
         try
         {
             var entity = _mapper.Map<PersonDTO, Person>(entityDTO);
-            var newEntity = await _service.CreateAsync(entity);
+            var newEntity = await _service.CreateAsync(entity, token);
             var newEntityDTO = _mapper.Map<Person, PersonDTO>(newEntity);
             return Ok(newEntityDTO);
         }
@@ -86,13 +86,13 @@ public class PersonController : Controller
         }
     }
 
-    [HttpPatch("UpdatePerson")]
-    public async Task<ActionResult> UpdatePersonAsync([FromBody] PersonDTO entityDTO)
+    [HttpPatch(nameof(UpdatePerson))]
+    public async Task<IActionResult> UpdatePerson([FromBody] PersonDTO entityDTO, CancellationToken token)
     {
         try
         {
             var entity = _mapper.Map<PersonDTO, Person>(entityDTO);
-            var updatedEntity = await _service.UpdateAsync(entity);
+            var updatedEntity = await _service.UpdateAsync(entity, token);
             var updatedEntityDTO = _mapper.Map<Person, PersonDTO>(updatedEntity);
             return Ok(updatedEntityDTO);
         }

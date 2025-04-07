@@ -4,11 +4,13 @@ using MovieDataService.Entities;
 
 namespace MovieDataService.Repository;
 
-public class MovieContext : DbContext
+public class MovieDataContext : DbContext
 {
     public DbSet<Movie> Movies { get; set; }
 
-    public MovieContext(DbContextOptions<MovieContext> options) : base(options)
+    public DbSet<Person> Persons { get; set; }
+
+    public MovieDataContext(DbContextOptions<MovieDataContext> options) : base(options)
     {
     }
 

@@ -2,7 +2,7 @@ using Core.Interfaces;
 
 namespace Core.BaseEntities;
 
-public class BaseService<T>: IService<T> where T: class
+public class BaseService<T> : IService<T> where T : class
 {
     private readonly IRepository<T> _repository;
 
@@ -10,34 +10,34 @@ public class BaseService<T>: IService<T> where T: class
     {
         _repository = repository;
     }
-    
-    public async Task<T> GetAsync(Guid id)
+
+    public async Task<T> GetAsync(Guid id, CancellationToken token)
     {
-        return await _repository.GetAsync(id);
+        return await _repository.GetAsync(id, token);
     }
 
-    public async Task<IEnumerable<T>> GetAsync(IEnumerable<Guid> ids)
+    public async Task<IEnumerable<T>> GetAsync(IEnumerable<Guid> ids, CancellationToken token)
     {
-        return await _repository.GetAsync(ids);
+        return await _repository.GetAsync(ids, token);
     }
 
-    public async Task<IEnumerable<T>> GetAllAsync()
+    public async Task<IEnumerable<T>> GetAllAsync(CancellationToken token)
     {
-        return await _repository.GetAllAsync();
+        return await _repository.GetAllAsync(token);
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(Guid id, CancellationToken token)
     {
-        await _repository.DeleteAsync(id);
+        await _repository.DeleteAsync(id, token);
     }
 
-    public async Task<T> CreateAsync(T entity)
+    public async Task<T> CreateAsync(T entity, CancellationToken token)
     {
-        return await _repository.CreateAsync(entity);
+        return await _repository.CreateAsync(entity, token);
     }
 
-    public async Task<T> UpdateAsync(T entity)
+    public async Task<T> UpdateAsync(T entity, CancellationToken token)
     {
-        return await _repository.UpdateAsync(entity);
+        return await _repository.UpdateAsync(entity, token);
     }
 }

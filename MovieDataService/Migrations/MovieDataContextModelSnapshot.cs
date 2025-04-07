@@ -2,21 +2,18 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MovieDataService.Repository;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace MovieDataService.Migrations.MovieContextMigrations
+namespace MovieDataService.Migrations
 {
-    [DbContext(typeof(MovieContext))]
-    [Migration("20250404162338_InitialCreate")]
-    partial class InitialCreate
+    [DbContext(typeof(MovieDataContext))]
+    partial class MovieDataContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,7 +70,7 @@ namespace MovieDataService.Migrations.MovieContextMigrations
 
                     b.HasKey("UUID");
 
-                    b.ToTable("Person");
+                    b.ToTable("Persons");
                 });
 #pragma warning restore 612, 618
         }

@@ -7,7 +7,6 @@ using MovieDataService.Repository;
 using MovieDataService.Service;
 using MovieDataService.Service.Interfaces;
 
-//TODO: В один контекст все
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -22,10 +21,10 @@ builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<IRepository<Person>, PersonRepository>();
 builder.Services.AddScoped<IPersonService, PersonService>();
 
-builder.Services.AddDbContext<MovieContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetSection("MovieServiceConnectionString").Value));
-builder.Services.AddDbContext<PersonContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetSection("PersonServiceConnectionString").Value));
+builder.Services.AddScoped<IFromFileEntitySaverService, FromFileEntitySaverService>();
+
+builder.Services.AddDbContext<MovieDataContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetSection("ConnectionString").Value));
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 

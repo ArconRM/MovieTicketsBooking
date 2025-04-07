@@ -8,9 +8,9 @@ namespace MovieDataService.Repository;
 
 public class PersonRepository : BaseRepository<Person>, IPersonRepository
 {
-    private readonly PersonContext _context;
+    private readonly MovieDataContext _context;
 
-    public PersonRepository(PersonContext context) : base(context)
+    public PersonRepository(MovieDataContext context) : base(context)
     {
         _context = context;
     }
