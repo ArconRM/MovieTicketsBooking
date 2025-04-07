@@ -9,7 +9,13 @@ public class Movie : IEntityWithUUID
 
     public string Title { get; set; }
 
+    public Guid ProducerUUID { get; set; }
+
+    public List<Guid> CastUUIDs { get; set; }
+
     public string Description { get; set; }
 
-    public Guid ProducerUUID { get; set; }
+    public TimeSpan Duration { get; set; }
+
+    public DateOnly ReleaseDate { get; set; }
 }

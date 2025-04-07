@@ -5,11 +5,11 @@ using MovieDataService.Repository.Interfaces;
 
 namespace MovieDataService.Repository;
 
-public class MovieRepository : BaseRepository<Movie>, IMovieRepository
+public class GenreRepository : BaseRepository<Genre>, IGenreRepository
 {
     private readonly MovieDataContext _context;
 
-    public MovieRepository(MovieDataContext context) : base(context)
+    public GenreRepository(MovieDataContext context) : base(context)
     {
         _context = context;
     }

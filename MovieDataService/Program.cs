@@ -21,6 +21,9 @@ builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<IRepository<Person>, PersonRepository>();
 builder.Services.AddScoped<IPersonService, PersonService>();
 
+builder.Services.AddScoped<IRepository<Genre>, GenreRepository>();
+builder.Services.AddScoped<IGenreService, GenreService>();
+
 builder.Services.AddScoped<IFromFileEntitySaverService, FromFileEntitySaverService>();
 
 builder.Services.AddDbContext<MovieDataContext>(options =>

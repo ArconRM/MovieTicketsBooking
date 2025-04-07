@@ -13,7 +13,14 @@ public class PersonConfiguration : IEntityTypeConfiguration<Person>
         builder.Property(p => p.UUID)
             .ValueGeneratedOnAdd();
 
+        builder.Property(p => p.DateBirth)
+            .IsRequired();
+
         builder.Property(p => p.FullName)
+            .IsRequired()
+            .HasMaxLength(255);
+
+        builder.Property(p => p.Nationality)
             .IsRequired()
             .HasMaxLength(255);
 
