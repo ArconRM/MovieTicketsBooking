@@ -8,6 +8,8 @@ public class MovieDTO : IEntityWithUUID
 
     public string Title { get; set; }
 
+    public List<Guid> GenresUUIDs { get; set; }
+
     public Guid ProducerUUID { get; set; }
 
     public List<Guid> CastUUIDs { get; set; }

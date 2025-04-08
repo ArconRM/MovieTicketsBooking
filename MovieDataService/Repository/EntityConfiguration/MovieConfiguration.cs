@@ -17,6 +17,10 @@ public class MovieConfiguration : IEntityTypeConfiguration<Movie>
             .HasMaxLength(255)
             .IsRequired();
 
+        builder.Property(m => m.GenresUUIDs)
+            .HasDefaultValue(new List<Guid>())
+            .IsRequired();
+
         builder.Property(m => m.Description)
             .HasMaxLength(1000)
             .IsRequired();
