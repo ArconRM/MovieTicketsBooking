@@ -12,9 +12,9 @@ public class Person : IEntityWithUUID
 
     public DateOnly DateBirth { get; set; }
 
-    public string Nationality { get; set; }
+    public string? Nationality { get; set; }
 
-    public string Description { get; set; }
+    public string? Description { get; set; }
 
     public Guid? AvatarUUID { get; set; }
 }

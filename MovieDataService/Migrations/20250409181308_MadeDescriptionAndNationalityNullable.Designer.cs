@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MovieDataService.Repository;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MovieDataService.Migrations
 {
     [DbContext(typeof(MovieDataContext))]
-    partial class MovieDataContextModelSnapshot : ModelSnapshot
+    [Migration("20250409181308_MadeDescriptionAndNationalityNullable")]
+    partial class MadeDescriptionAndNationalityNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,6 +53,7 @@ namespace MovieDataService.Migrations
                         .HasColumnType("uuid[]");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("character varying(1000)");
 
@@ -64,9 +68,6 @@ namespace MovieDataService.Migrations
 
                     b.Property<Guid>("ProducerUUID")
                         .HasColumnType("uuid");
-
-                    b.Property<double?>("Rating")
-                        .HasColumnType("double precision");
 
                     b.Property<DateOnly>("ReleaseDate")
                         .HasColumnType("date");

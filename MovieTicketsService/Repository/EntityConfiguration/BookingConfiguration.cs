@@ -1,3 +1,4 @@
+using Common.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MovieTicketsService.Entities;
@@ -21,5 +22,9 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
 
         builder.Property(b => b.UserUUID)
             .IsRequired();
+
+        builder.Property(b => b.Status)
+            .IsRequired()
+            .HasDefaultValue(BookingStatus.Confirmed);
     }
 }

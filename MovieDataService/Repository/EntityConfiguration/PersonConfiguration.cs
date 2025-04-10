@@ -21,7 +21,6 @@ public class PersonConfiguration : IEntityTypeConfiguration<Person>
             .HasMaxLength(255);
 
         builder.Property(p => p.Nationality)
-            .IsRequired()
             .HasMaxLength(255);
 
         builder.Property(p => p.Description)

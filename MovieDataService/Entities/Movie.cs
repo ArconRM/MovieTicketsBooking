@@ -15,7 +15,9 @@ public class Movie : IEntityWithUUID
 
     public List<Guid> CastUUIDs { get; set; }
 
-    public string Description { get; set; }
+    public string? Description { get; set; }
+
+    public double? Rating { get; set; }
 
     public TimeSpan Duration { get; set; }
 
