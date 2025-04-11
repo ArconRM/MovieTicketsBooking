@@ -11,7 +11,7 @@ public class Person : IEntityWithUUID
 
     public string FullName { get; set; }
 
-    public DateOnly DateBirth { get; set; }
+    public DateTime DateBirth { get; set; }
 
     public string? Nationality { get; set; }
 
