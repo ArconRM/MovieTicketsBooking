@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MovieDataService.Migrations
 {
     [DbContext(typeof(MovieDataContext))]
-    [Migration("20250409182323_MadeMovieDescriptionNullable")]
-    partial class MadeMovieDescriptionNullable
+    [Migration("20250411152643_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,14 +50,16 @@ namespace MovieDataService.Migrations
 
                     b.PrimitiveCollection<List<Guid>>("CastUUIDs")
                         .IsRequired()
-                        .HasColumnType("uuid[]");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid[]")
+                        .HasDefaultValue(new List<Guid>());
 
                     b.Property<string>("Description")
                         .HasMaxLength(1000)
                         .HasColumnType("character varying(1000)");
 
-                    b.Property<TimeSpan>("Duration")
-                        .HasColumnType("interval");
+                    b.Property<int>("Duration")
+                        .HasColumnType("integer");
 
                     b.PrimitiveCollection<List<Guid>>("GenresUUIDs")
                         .IsRequired()
@@ -71,8 +73,8 @@ namespace MovieDataService.Migrations
                     b.Property<double?>("Rating")
                         .HasColumnType("double precision");
 
-                    b.Property<DateOnly>("ReleaseDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("ReleaseDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -93,8 +95,8 @@ namespace MovieDataService.Migrations
                     b.Property<Guid?>("AvatarUUID")
                         .HasColumnType("uuid");
 
-                    b.Property<DateOnly>("DateBirth")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("DateBirth")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
                         .HasMaxLength(1000)
