@@ -21,6 +21,13 @@ public class MovieConfiguration : IEntityTypeConfiguration<Movie>
             .HasDefaultValue(new List<Guid>())
             .IsRequired();
 
+        builder.Property(m => m.ProducerUUID)
+            .IsRequired();
+
+        builder.Property(m => m.CastUUIDs)
+            .HasDefaultValue(new List<Guid>())
+            .IsRequired();
+
         builder.Property(m => m.Description)
             .HasMaxLength(1000);
 

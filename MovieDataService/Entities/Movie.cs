@@ -19,7 +19,7 @@ public class Movie : IEntityWithUUID
 
     public double? Rating { get; set; }
 
-    public TimeSpan Duration { get; set; }
+    public int Duration { get; set; }
 
-    public DateOnly ReleaseDate { get; set; }
+    public DateTime ReleaseDate { get; set; }
 }
