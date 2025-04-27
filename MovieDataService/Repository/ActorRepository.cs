@@ -6,11 +6,11 @@ using MovieDataService.Repository.Interfaces;
 
 namespace MovieDataService.Repository;
 
-public class PersonRepository : BaseRepository<Person>, IPersonRepository
+public class ActorRepository : BaseRepository<Actor>, IActorRepository
 {
     private readonly MovieDataContext _context;
 
-    public PersonRepository(MovieDataContext context) : base(context)
+    public ActorRepository(MovieDataContext context) : base(context)
     {
         _context = context;
     }

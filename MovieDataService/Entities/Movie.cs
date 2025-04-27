@@ -9,11 +9,12 @@ public class Movie : IEntityWithUUID
 
     public string Title { get; set; }
 
-    public List<Guid> GenresUUIDs { get; set; }
+    public List<Genre> Genres { get; set; }
 
-    public Guid ProducerUUID { get; set; }
+    public Guid ProducerId { get; set; }
+    public Producer Producer { get; set; }
 
-    public List<Guid> CastUUIDs { get; set; }
+    public List<Actor> Actors { get; set; }
 
     public string? Description { get; set; }
 

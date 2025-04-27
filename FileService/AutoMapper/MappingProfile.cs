@@ -1,5 +1,6 @@
 using AutoMapper;
 using Common.DTO;
+using Common.DTO.Files;
 using FileService.Entities;
 
 namespace FileService.AutoMapper;

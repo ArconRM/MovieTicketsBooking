@@ -10,7 +10,9 @@ public class MovieDataContext : DbContext
 
     public DbSet<Genre> Genres { get; set; }
 
-    public DbSet<Person> Persons { get; set; }
+    public DbSet<Actor> Actors { get; set; }
+
+    public DbSet<Producer> Producers { get; set; }
 
     public MovieDataContext(DbContextOptions<MovieDataContext> options) : base(options)
     {

@@ -1,18 +1,16 @@
-using Core.Interfaces;
+namespace Common.DTO.MovieData;
 
-namespace Common.DTO;
-
-public class MovieDTO : IEntityWithUUID
+public class MovieWithIdsDTO
 {
     public Guid UUID { get; set; }
 
     public string Title { get; set; }
 
-    public List<Guid> GenresUUIDs { get; set; }
+    public List<Guid> GenresIds { get; set; }
 
-    public Guid ProducerUUID { get; set; }
+    public Guid ProducerId { get; set; }
 
-    public List<Guid> CastUUIDs { get; set; }
+    public List<Guid> ActorsIds { get; set; }
 
     public string? Description { get; set; }
 

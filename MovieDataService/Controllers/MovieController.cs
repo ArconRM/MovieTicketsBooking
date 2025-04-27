@@ -1,5 +1,6 @@
 using AutoMapper;
 using Common.DTO;
+using Common.DTO.MovieData;
 using Microsoft.AspNetCore.Mvc;
 using MovieDataService.Entities;
 using MovieDataService.Service.Interfaces;
@@ -38,8 +39,24 @@ public class MovieController : Controller
         try
         {
             var movie = await _movieService.GetAsync(id, token);
-            var movieDTO = _mapper.Map<Movie, MovieDTO>(movie);
+            var movieDTO = _mapper.Map<Movie, MovieFullDTO>(movie);
             return Ok(movieDTO);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, e.Message);
+            throw;
+        }
+    }
+
+    [HttpGet(nameof(GetMoviesByGenre))]
+    public async Task<IActionResult> GetMoviesByGenre(Guid genreId, CancellationToken token)
+    {
+        try
+        {
+            var movies = await _movieService.GetMoviesByGenreAsync(genreId, token);
+            var moviesDTO = _mapper.Map<IEnumerable<Movie>, IEnumerable<MovieDisplayDTO>>(movies);
+            return Ok(moviesDTO);
         }
         catch (Exception e)
         {
@@ -54,7 +71,7 @@ public class MovieController : Controller
         try
         {
             var movies = await _movieService.GetAllAsync(token);
-            var moviesDTO = _mapper.Map<IEnumerable<Movie>, IEnumerable<MovieDTO>>(movies);
+            var moviesDTO = _mapper.Map<IEnumerable<Movie>, IEnumerable<MovieDisplayDTO>>(movies);
             return Ok(moviesDTO);
         }
         catch (Exception e)
@@ -80,13 +97,13 @@ public class MovieController : Controller
     }
 
     [HttpPost(nameof(CreateMovie))]
-    public async Task<IActionResult> CreateMovie([FromBody] MovieDTO entityDTO, CancellationToken token)
+    public async Task<IActionResult> CreateMovie([FromBody] MovieWithIdsDTO entityDTO, CancellationToken token)
     {
         try
         {
-            var entity = _mapper.Map<MovieDTO, Movie>(entityDTO);
+            var entity = _mapper.Map<MovieWithIdsDTO, Movie>(entityDTO);
             var newEntity = await _movieService.CreateAsync(entity, token);
-            var newEntityDTO = _mapper.Map<Movie, MovieDTO>(newEntity);
+            var newEntityDTO = _mapper.Map<Movie, MovieWithIdsDTO>(newEntity);
             return Ok(newEntityDTO);
         }
         catch (Exception e)
@@ -97,13 +114,13 @@ public class MovieController : Controller
     }
 
     [HttpPatch(nameof(UpdateMovie))]
-    public async Task<IActionResult> UpdateMovie([FromBody] MovieDTO entityDTO, CancellationToken token)
+    public async Task<IActionResult> UpdateMovie([FromBody] MovieFullDTO entityDisplayDto, CancellationToken token)
     {
         try
         {
-            var entity = _mapper.Map<MovieDTO, Movie>(entityDTO);
+            var entity = _mapper.Map<MovieFullDTO, Movie>(entityDisplayDto);
             var updatedEntity = await _movieService.UpdateAsync(entity, token);
-            var updatedEntityDTO = _mapper.Map<Movie, MovieDTO>(updatedEntity);
+            var updatedEntityDTO = _mapper.Map<Movie, MovieFullDTO>(updatedEntity);
             return Ok(updatedEntityDTO);
         }
         catch (Exception e)
@@ -113,8 +130,8 @@ public class MovieController : Controller
         }
     }
 
-    [HttpPost("LoadMoviesFromFile")]
-    public async Task<IActionResult> AddFile(IFormFile file, CancellationToken token)
+    [HttpPost(nameof(LoadMoviesFromFile))]
+    public async Task<IActionResult> LoadMoviesFromFile(IFormFile file, CancellationToken token)
     {
         try
         {

@@ -1,5 +1,6 @@
 using AutoMapper;
 using Common.DTO;
+using Common.DTO.MovieTickets;
 using MovieTicketsService.Entities;
 
 namespace MovieTicketsService.AutoMapper;

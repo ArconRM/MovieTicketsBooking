@@ -4,9 +4,9 @@ using MovieDataService.Entities;
 
 namespace MovieDataService.Repository.EntityConfiguration;
 
-public class PersonConfiguration : IEntityTypeConfiguration<Person>
+public class ProducerConfiguration : IEntityTypeConfiguration<Producer>
 {
-    public void Configure(EntityTypeBuilder<Person> builder)
+    public void Configure(EntityTypeBuilder<Producer> builder)
     {
         builder.HasKey(p => p.UUID);
 

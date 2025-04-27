@@ -1,11 +1,8 @@
 using Core.Interfaces;
 
 namespace MovieDataService.Entities;
-//TODO: файловый сервис на стримах (доделать)
-//TODO: как возвращать связанные сущности
-//TODO!: для взаимодействия между сервисами grpc + rabbitmq (не через eventmanager)
 
-public class Person : IEntityWithUUID
+public class Actor : IEntityWithUUID
 {
     public Guid UUID { get; set; }
 
@@ -18,4 +15,6 @@ public class Person : IEntityWithUUID
     public string? Description { get; set; }
 
     public Guid? AvatarUUID { get; set; }
+
+    public List<Movie> Movies { get; set; }
 }

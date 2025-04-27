@@ -3,6 +3,6 @@ using MovieDataService.Entities;
 
 namespace MovieDataService.Repository.Interfaces;
 
-public interface IPersonRepository : IRepository<Person>
+public interface IActorRepository : IRepository<Actor>
 {
 }

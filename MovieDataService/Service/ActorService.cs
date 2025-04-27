@@ -6,11 +6,11 @@ using MovieDataService.Service.Interfaces;
 
 namespace MovieDataService.Service;
 
-public class GenreService : BaseService<Genre>, IGenreService
+public class ActorService : BaseService<Actor>, IActorService
 {
-    private readonly IGenreRepository _repository;
+    private readonly IActorRepository _repository;
 
-    public GenreService(IGenreRepository repository) : base(repository)
+    public ActorService(IActorRepository repository) : base(repository)
     {
         _repository = repository;
     }

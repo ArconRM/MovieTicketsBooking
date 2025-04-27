@@ -16,5 +16,8 @@ public class GenreConfiguration : IEntityTypeConfiguration<Genre>
         builder.Property(g => g.Name)
             .IsRequired()
             .HasMaxLength(255);
+
+        builder
+            .HasMany(g => g.Movies);
     }
 }

@@ -8,6 +8,8 @@ public class Seat : IEntityWithUUID
 
     public Guid ScreeningRoomUUID { get; set; }
 
+    public ScreeningRoom ScreeningRoom { get; set; }
+
     public int RowNumber { get; set; }
 
     public int SeatNumber { get; set; }

@@ -1,7 +1,7 @@
 using Common.Enums;
 using Core.Interfaces;
 
-namespace Common.DTO;
+namespace Common.DTO.MovieTickets;
 
 public class BookingDTO : IEntityWithUUID
 {

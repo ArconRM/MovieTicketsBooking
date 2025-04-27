@@ -11,4 +11,6 @@ public class Theater : IEntityWithUUID
     public string Location { get; set; }
 
     public string ContactInfo { get; set; }
+
+    public List<ScreeningRoom> ScreeningRooms { get; set; }
 }

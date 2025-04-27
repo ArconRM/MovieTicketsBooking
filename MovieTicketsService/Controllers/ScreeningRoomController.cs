@@ -1,5 +1,6 @@
 using AutoMapper;
 using Common.DTO;
+using Common.DTO.MovieTickets;
 using Microsoft.AspNetCore.Mvc;
 using MovieTicketsService.Entities;
 using MovieTicketsService.Service.Interfaces;

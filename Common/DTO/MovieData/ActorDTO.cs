@@ -1,8 +1,8 @@
 using Core.Interfaces;
 
-namespace Common.DTO;
+namespace Common.DTO.MovieData;
 
-public class PersonDTO : IEntityWithUUID
+public class ActorDTO : IEntityWithUUID
 {
     public Guid UUID { get; set; }
 

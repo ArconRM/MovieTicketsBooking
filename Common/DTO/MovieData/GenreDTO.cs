@@ -1,6 +1,6 @@
 using Core.Interfaces;
 
-namespace Common.DTO;
+namespace Common.DTO.MovieData;
 
 public class GenreDTO : IEntityWithUUID
 {

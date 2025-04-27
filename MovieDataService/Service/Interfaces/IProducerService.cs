@@ -3,6 +3,6 @@ using MovieDataService.Entities;
 
 namespace MovieDataService.Service.Interfaces;
 
-public interface IPersonService : IService<Person>
+public interface IProducerService : IService<Producer>
 {
 }

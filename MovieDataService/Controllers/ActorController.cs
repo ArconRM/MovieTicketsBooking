@@ -8,29 +8,29 @@ using MovieDataService.Service.Interfaces;
 namespace MovieDataService.Controllers;
 
 [Route("api/[controller]")]
-public class GenreController : Controller
+public class ActorController : Controller
 {
-    private readonly ILogger<GenreController> _logger;
+    private readonly ILogger<ActorController> _logger;
 
     private readonly IMapper _mapper;
 
-    private readonly IGenreService _service;
+    private readonly IActorService _service;
 
-    public GenreController(ILogger<GenreController> logger, IMapper mapper, IGenreService service)
+    public ActorController(ILogger<ActorController> logger, IMapper mapper, IActorService service)
     {
         _logger = logger;
         _mapper = mapper;
         _service = service;
     }
 
-    [HttpGet(nameof(GetGenre))]
-    public async Task<IActionResult> GetGenre(Guid id, CancellationToken token)
+    [HttpGet(nameof(GetActor))]
+    public async Task<IActionResult> GetActor(Guid id, CancellationToken token)
     {
         try
         {
-            var genre = await _service.GetAsync(id, token);
-            var genreDTO = _mapper.Map<Genre, GenreDTO>(genre);
-            return Ok(genreDTO);
+            var actor = await _service.GetAsync(id, token);
+            var actorDTO = _mapper.Map<Actor, ActorDTO>(actor);
+            return Ok(actorDTO);
         }
         catch (Exception e)
         {
@@ -39,14 +39,14 @@ public class GenreController : Controller
         }
     }
 
-    [HttpGet(nameof(GetAllGenres))]
-    public async Task<IActionResult> GetAllGenres(CancellationToken token)
+    [HttpGet(nameof(GetAllActors))]
+    public async Task<IActionResult> GetAllActors(CancellationToken token)
     {
         try
         {
-            var genres = await _service.GetAllAsync(token);
-            var genresDTO = _mapper.Map<IEnumerable<Genre>, IEnumerable<GenreDTO>>(genres);
-            return Ok(genresDTO);
+            var actors = await _service.GetAllAsync(token);
+            var actorsDTO = _mapper.Map<IEnumerable<Actor>, IEnumerable<ActorDTO>>(actors);
+            return Ok(actorsDTO);
         }
         catch (Exception e)
         {
@@ -55,8 +55,8 @@ public class GenreController : Controller
         }
     }
 
-    [HttpDelete(nameof(DeleteGenre))]
-    public async Task<IActionResult> DeleteGenre(Guid id, CancellationToken token)
+    [HttpDelete(nameof(DeleteActor))]
+    public async Task<IActionResult> DeleteActor(Guid id, CancellationToken token)
     {
         try
         {
@@ -70,14 +70,14 @@ public class GenreController : Controller
         }
     }
 
-    [HttpPost(nameof(CreateGenre))]
-    public async Task<IActionResult> CreateGenre([FromBody] GenreDTO entityDTO, CancellationToken token)
+    [HttpPost(nameof(CreateActor))]
+    public async Task<IActionResult> CreateActor([FromBody] ActorDTO entityDTO, CancellationToken token)
     {
         try
         {
-            var entity = _mapper.Map<GenreDTO, Genre>(entityDTO);
+            var entity = _mapper.Map<ActorDTO, Actor>(entityDTO);
             var newEntity = await _service.CreateAsync(entity, token);
-            var newEntityDTO = _mapper.Map<Genre, GenreDTO>(newEntity);
+            var newEntityDTO = _mapper.Map<Actor, ActorDTO>(newEntity);
             return Ok(newEntityDTO);
         }
         catch (Exception e)
@@ -87,14 +87,14 @@ public class GenreController : Controller
         }
     }
 
-    [HttpPatch(nameof(UpdateGenre))]
-    public async Task<IActionResult> UpdateGenre([FromBody] GenreDTO entityDTO, CancellationToken token)
+    [HttpPatch(nameof(UpdateActor))]
+    public async Task<IActionResult> UpdateActor([FromBody] ActorDTO entityDTO, CancellationToken token)
     {
         try
         {
-            var entity = _mapper.Map<GenreDTO, Genre>(entityDTO);
+            var entity = _mapper.Map<ActorDTO, Actor>(entityDTO);
             var updatedEntity = await _service.UpdateAsync(entity, token);
-            var updatedEntityDTO = _mapper.Map<Genre, GenreDTO>(updatedEntity);
+            var updatedEntityDTO = _mapper.Map<Actor, ActorDTO>(updatedEntity);
             return Ok(updatedEntityDTO);
         }
         catch (Exception e)

@@ -8,7 +8,11 @@ public class ScreeningRoom : IEntityWithUUID
 
     public Guid TheaterUUID { get; set; }
 
+    public Theater Theater { get; set; }
+
     public string Name { get; set; }
 
     public int Capacity { get; set; }
+
+    public List<Seat> Seats { get; set; }
 }

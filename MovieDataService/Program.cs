@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MovieDataService.AutoMapper;
 using MovieDataService.Entities;
 using MovieDataService.Repository;
+using MovieDataService.Repository.Interfaces;
 using MovieDataService.Service;
 using MovieDataService.Service.Interfaces;
 
@@ -15,13 +16,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IRepository<Movie>, MovieRepository>();
+builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddScoped<IMovieService, MovieService>();
 
-builder.Services.AddScoped<IRepository<Person>, PersonRepository>();
-builder.Services.AddScoped<IPersonService, PersonService>();
+builder.Services.AddScoped<IActorService, ActorService>();
+builder.Services.AddScoped<IActorRepository, ActorRepository>();
 
-builder.Services.AddScoped<IRepository<Genre>, GenreRepository>();
+builder.Services.AddScoped<IProducerRepository, ProducerRepository>();
+builder.Services.AddScoped<IProducerService, ProducerService>();
+
+builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 builder.Services.AddScoped<IGenreService, GenreService>();
 
 builder.Services.AddScoped<IFromFileEntitySaverService, FromFileEntitySaverService>();

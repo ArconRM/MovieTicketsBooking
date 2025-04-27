@@ -17,16 +17,18 @@ public class MovieConfiguration : IEntityTypeConfiguration<Movie>
             .HasMaxLength(255)
             .IsRequired();
 
-        builder.Property(m => m.GenresUUIDs)
-            .HasDefaultValue(new List<Guid>())
-            .IsRequired();
+        builder
+            .HasMany(m => m.Genres)
+            .WithMany(g => g.Movies);
 
-        builder.Property(m => m.ProducerUUID)
-            .IsRequired();
+        builder
+            .HasOne(m => m.Producer)
+            .WithMany()
+            .HasForeignKey(m => m.ProducerId);
 
-        builder.Property(m => m.CastUUIDs)
-            .HasDefaultValue(new List<Guid>())
-            .IsRequired();
+        builder
+            .HasMany(m => m.Actors)
+            .WithMany(a => a.Movies);
 
         builder.Property(m => m.Description)
             .HasMaxLength(1000);

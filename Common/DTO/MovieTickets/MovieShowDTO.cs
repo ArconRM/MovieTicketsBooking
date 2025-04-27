@@ -1,6 +1,6 @@
 using Core.Interfaces;
 
-namespace Common.DTO;
+namespace Common.DTO.MovieTickets;
 
 public class MovieShowDTO : IEntityWithUUID
 {

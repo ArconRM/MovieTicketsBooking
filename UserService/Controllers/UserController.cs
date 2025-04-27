@@ -1,5 +1,6 @@
 using AutoMapper;
 using Common.DTO;
+using Common.DTO.User;
 using Microsoft.AspNetCore.Mvc;
 using UserService.Entities;
 using UserService.Service.Interfaces;
