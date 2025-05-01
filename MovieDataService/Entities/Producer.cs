@@ -1,7 +1,7 @@
 using Core.Interfaces;
 
 namespace MovieDataService.Entities;
-//TODO: навигационные свойства добавить (с разными дто-шками)
+
 //TODO!: для взаимодействия между сервисами grpc (1) + rabbitmq (потом) (не через eventmanager)
 //TODO: пагинация на фильмы по жанру
 //TODO: генерить пдфки билетов в отдельном сервисе

@@ -38,13 +38,6 @@ public class FromFileEntitySaverService : IFromFileEntitySaverService
                 savedMoviesBag.Add(saved);
             });
 
-        // foreach (Movie movie in movies)
-        // {
-        //     Movie saved = await _movieService.CreateAsync(movie, token);
-        //     Interlocked.Increment(ref count);
-        //     savedMoviesBag.Add(saved);
-        // }
-
         return savedMoviesBag.ToList();
     }
 }
