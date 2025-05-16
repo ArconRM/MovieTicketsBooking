@@ -14,11 +14,15 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
         builder.Property(b => b.UUID)
             .ValueGeneratedOnAdd();
 
-        builder.Property(b => b.MovieShowUUID)
-            .IsRequired();
+        builder
+            .HasOne(b => b.MovieShow)
+            .WithMany(m => m.Bookings)
+            .HasForeignKey(b => b.MovieShowId);
 
-        builder.Property(b => b.SeatUUID)
-            .IsRequired();
+        builder
+            .HasOne(b => b.Seat)
+            .WithMany(s => s.Bookings)
+            .HasForeignKey(b => b.SeatId);
 
         builder.Property(b => b.UserUUID)
             .IsRequired();

@@ -13,4 +13,14 @@ public class MovieShowRepository : BaseRepository<MovieShow>, IMovieShowReposito
     {
         _context = context;
     }
+
+    public override async Task<MovieShow> GetAsync(Guid id, CancellationToken token)
+    {
+        DbSet<MovieShow> set = _context.MovieShows;
+        MovieShow result = await set
+            .AsNoTracking()
+            .Include(ms => ms.ScreeningRoom)
+            .FirstOrDefaultAsync(ms => ms.UUID == id, token);
+        return result;
+    }
 }

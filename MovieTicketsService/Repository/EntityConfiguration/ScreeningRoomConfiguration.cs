@@ -13,8 +13,10 @@ public class ScreeningRoomConfiguration : IEntityTypeConfiguration<ScreeningRoom
         builder.Property(sr => sr.UUID)
             .ValueGeneratedOnAdd();
 
-        builder.Property(sr => sr.TheaterUUID)
-            .IsRequired();
+        builder
+            .HasOne(sr => sr.Theater)
+            .WithMany(t => t.ScreeningRooms)
+            .HasForeignKey(sr => sr.TheaterId);
 
         builder.Property(sr => sr.Name)
             .IsRequired()

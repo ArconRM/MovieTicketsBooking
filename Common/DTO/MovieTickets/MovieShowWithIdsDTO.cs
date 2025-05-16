@@ -2,7 +2,7 @@ using Core.Interfaces;
 
 namespace Common.DTO.MovieTickets;
 
-public class MovieShowDTO : IEntityWithUUID
+public class MovieShowWithIdsDTO : IEntityWithUUID
 {
     public Guid UUID { get; set; }
 

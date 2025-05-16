@@ -3,7 +3,7 @@ using Core.Interfaces;
 
 namespace Common.DTO.MovieTickets;
 
-public class BookingDTO : IEntityWithUUID
+public class BookingWithIdsDTO : IEntityWithUUID
 {
     public Guid UUID { get; set; }
 

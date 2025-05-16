@@ -13,4 +13,14 @@ public class ScreeningRoomRepository : BaseRepository<ScreeningRoom>, IScreening
     {
         _context = context;
     }
+
+    public override async Task<ScreeningRoom> GetAsync(Guid id, CancellationToken token)
+    {
+        DbSet<ScreeningRoom> set = _context.ScreeningRooms;
+        ScreeningRoom result = await set
+            .AsNoTracking()
+            .Include(sr => sr.Theater)
+            .FirstOrDefaultAsync(sr => sr.UUID == id, token);
+        return result;
+    }
 }

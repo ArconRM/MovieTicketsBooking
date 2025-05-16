@@ -16,8 +16,10 @@ public class MovieShowConfiguration : IEntityTypeConfiguration<MovieShow>
         builder.Property(ms => ms.MovieUUID)
             .IsRequired();
 
-        builder.Property(ms => ms.ScreeningRoomUUID)
-            .IsRequired();
+        builder
+            .HasOne(ms => ms.ScreeningRoom)
+            .WithMany(sr => sr.MovieShows)
+            .HasForeignKey(ms => ms.ScreeningRoomId);
 
         builder.Property(ms => ms.StartTime)
             .IsRequired();

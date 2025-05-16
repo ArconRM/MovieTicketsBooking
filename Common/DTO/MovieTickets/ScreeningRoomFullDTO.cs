@@ -2,11 +2,11 @@ using Core.Interfaces;
 
 namespace Common.DTO.MovieTickets;
 
-public class ScreeningRoomDTO : IEntityWithUUID
+public class ScreeningRoomFullDTO : IEntityWithUUID
 {
     public Guid UUID { get; set; }
 
-    public Guid TheaterUUID { get; set; }
+    public TheaterDTO Theater { get; set; }
 
     public string Name { get; set; }
 

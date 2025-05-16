@@ -28,7 +28,7 @@ public class MovieShowController : Controller
         try
         {
             var movieShow = await _service.GetAsync(id, token);
-            var movieShowDTO = _mapper.Map<MovieShow, MovieShowDTO>(movieShow);
+            var movieShowDTO = _mapper.Map<MovieShow, MovieShowFullDTO>(movieShow);
             return Ok(movieShowDTO);
         }
         catch (Exception e)
@@ -44,7 +44,7 @@ public class MovieShowController : Controller
         try
         {
             var movieShows = await _service.GetAllAsync(token);
-            var movieShowsDTO = _mapper.Map<IEnumerable<MovieShow>, IEnumerable<MovieShowDTO>>(movieShows);
+            var movieShowsDTO = _mapper.Map<IEnumerable<MovieShow>, IEnumerable<MovieShowWithIdsDTO>>(movieShows);
             return Ok(movieShowsDTO);
         }
         catch (Exception e)
@@ -70,13 +70,14 @@ public class MovieShowController : Controller
     }
 
     [HttpPost(nameof(CreateMovieShow))]
-    public async Task<IActionResult> CreateMovieShow([FromBody] MovieShowDTO entityDTO, CancellationToken token)
+    public async Task<IActionResult> CreateMovieShow([FromBody] MovieShowWithIdsDTO entityWithIdsDto,
+        CancellationToken token)
     {
         try
         {
-            var entity = _mapper.Map<MovieShowDTO, MovieShow>(entityDTO);
+            var entity = _mapper.Map<MovieShowWithIdsDTO, MovieShow>(entityWithIdsDto);
             var newEntity = await _service.CreateAsync(entity, token);
-            var newEntityDTO = _mapper.Map<MovieShow, MovieShowDTO>(newEntity);
+            var newEntityDTO = _mapper.Map<MovieShow, MovieShowWithIdsDTO>(newEntity);
             return Ok(newEntityDTO);
         }
         catch (Exception e)
@@ -87,13 +88,14 @@ public class MovieShowController : Controller
     }
 
     [HttpPatch(nameof(UpdateMovieShow))]
-    public async Task<IActionResult> UpdateMovieShow([FromBody] MovieShowDTO entityDTO, CancellationToken token)
+    public async Task<IActionResult> UpdateMovieShow([FromBody] MovieShowWithIdsDTO entityWithIdsDto,
+        CancellationToken token)
     {
         try
         {
-            var entity = _mapper.Map<MovieShowDTO, MovieShow>(entityDTO);
+            var entity = _mapper.Map<MovieShowWithIdsDTO, MovieShow>(entityWithIdsDto);
             var updatedEntity = await _service.UpdateAsync(entity, token);
-            var updatedEntityDTO = _mapper.Map<MovieShow, MovieShowDTO>(updatedEntity);
+            var updatedEntityDTO = _mapper.Map<MovieShow, MovieShowWithIdsDTO>(updatedEntity);
             return Ok(updatedEntityDTO);
         }
         catch (Exception e)

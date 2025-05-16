@@ -13,8 +13,10 @@ public class SeatConfiguration : IEntityTypeConfiguration<Seat>
         builder.Property(s => s.UUID)
             .ValueGeneratedOnAdd();
 
-        builder.Property(s => s.ScreeningRoomUUID)
-            .IsRequired();
+        builder
+            .HasOne(s => s.ScreeningRoom)
+            .WithMany(sr => sr.Seats)
+            .HasForeignKey(sr => sr.ScreeningRoomId);
 
         builder.Property(s => s.RowNumber)
             .IsRequired();

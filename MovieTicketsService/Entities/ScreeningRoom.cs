@@ -6,7 +6,7 @@ public class ScreeningRoom : IEntityWithUUID
 {
     public Guid UUID { get; set; }
 
-    public Guid TheaterUUID { get; set; }
+    public Guid TheaterId { get; set; }
 
     public Theater Theater { get; set; }
 
@@ -15,4 +15,6 @@ public class ScreeningRoom : IEntityWithUUID
     public int Capacity { get; set; }
 
     public List<Seat> Seats { get; set; }
+
+    public List<MovieShow> MovieShows { get; set; }
 }

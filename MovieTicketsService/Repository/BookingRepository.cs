@@ -13,4 +13,15 @@ public class BookingRepository : BaseRepository<Booking>, IBookingRepository
     {
         _context = context;
     }
+
+    public override async Task<Booking> GetAsync(Guid id, CancellationToken token)
+    {
+        DbSet<Booking> set = _context.Bookings;
+        Booking result = await set
+            .AsNoTracking()
+            .Include(b => b.MovieShow)
+            .Include(b => b.Seat)
+            .FirstOrDefaultAsync(b => b.UUID == id, token);
+        return result;
+    }
 }

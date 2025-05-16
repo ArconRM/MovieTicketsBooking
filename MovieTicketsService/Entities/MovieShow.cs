@@ -8,11 +8,15 @@ public class MovieShow : IEntityWithUUID
 
     public Guid MovieUUID { get; set; }
 
-    public Guid ScreeningRoomUUID { get; set; }
+    public Guid ScreeningRoomId { get; set; }
+
+    public ScreeningRoom ScreeningRoom { get; set; }
 
     public DateTime StartTime { get; set; }
 
     public DateTime EndTime { get; set; }
 
     public decimal Price { get; set; }
+
+    public List<Booking> Bookings { get; set; }
 }

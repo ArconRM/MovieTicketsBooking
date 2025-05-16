@@ -7,9 +7,12 @@ public class Booking : IEntityWithUUID
 {
     public Guid UUID { get; set; }
 
-    public Guid MovieShowUUID { get; set; }
+    public Guid MovieShowId { get; set; }
+    public MovieShow MovieShow { get; set; }
 
-    public Guid SeatUUID { get; set; }
+    public Guid SeatId { get; set; }
+
+    public Seat Seat { get; set; }
 
     public Guid UserUUID { get; set; }
 

@@ -28,7 +28,7 @@ public class SeatController : Controller
         try
         {
             var seat = await _service.GetAsync(id, token);
-            var seatDTO = _mapper.Map<Seat, SeatDTO>(seat);
+            var seatDTO = _mapper.Map<Seat, SeatFullDTO>(seat);
             return Ok(seatDTO);
         }
         catch (Exception e)
@@ -44,7 +44,7 @@ public class SeatController : Controller
         try
         {
             var seats = await _service.GetAllAsync(token);
-            var seatsDTO = _mapper.Map<IEnumerable<Seat>, IEnumerable<SeatDTO>>(seats);
+            var seatsDTO = _mapper.Map<IEnumerable<Seat>, IEnumerable<SeatWithIdsDTO>>(seats);
             return Ok(seatsDTO);
         }
         catch (Exception e)
@@ -70,13 +70,13 @@ public class SeatController : Controller
     }
 
     [HttpPost(nameof(CreateSeat))]
-    public async Task<IActionResult> CreateSeat([FromBody] SeatDTO entityDTO, CancellationToken token)
+    public async Task<IActionResult> CreateSeat([FromBody] SeatWithIdsDTO entityWithIdsDto, CancellationToken token)
     {
         try
         {
-            var entity = _mapper.Map<SeatDTO, Seat>(entityDTO);
+            var entity = _mapper.Map<SeatWithIdsDTO, Seat>(entityWithIdsDto);
             var newEntity = await _service.CreateAsync(entity, token);
-            var newEntityDTO = _mapper.Map<Seat, SeatDTO>(newEntity);
+            var newEntityDTO = _mapper.Map<Seat, SeatWithIdsDTO>(newEntity);
             return Ok(newEntityDTO);
         }
         catch (Exception e)
@@ -87,13 +87,13 @@ public class SeatController : Controller
     }
 
     [HttpPatch(nameof(UpdateSeat))]
-    public async Task<IActionResult> UpdateSeat([FromBody] SeatDTO entityDTO, CancellationToken token)
+    public async Task<IActionResult> UpdateSeat([FromBody] SeatWithIdsDTO entityWithIdsDto, CancellationToken token)
     {
         try
         {
-            var entity = _mapper.Map<SeatDTO, Seat>(entityDTO);
+            var entity = _mapper.Map<SeatWithIdsDTO, Seat>(entityWithIdsDto);
             var updatedEntity = await _service.UpdateAsync(entity, token);
-            var updatedEntityDTO = _mapper.Map<Seat, SeatDTO>(updatedEntity);
+            var updatedEntityDTO = _mapper.Map<Seat, SeatWithIdsDTO>(updatedEntity);
             return Ok(updatedEntityDTO);
         }
         catch (Exception e)

@@ -28,7 +28,7 @@ public class BookingController : Controller
         try
         {
             var booking = await _service.GetAsync(id, token);
-            var bookingDTO = _mapper.Map<Booking, BookingDTO>(booking);
+            var bookingDTO = _mapper.Map<Booking, BookingFullDTO>(booking);
             return Ok(bookingDTO);
         }
         catch (Exception e)
@@ -44,7 +44,7 @@ public class BookingController : Controller
         try
         {
             var bookings = await _service.GetAllAsync(token);
-            var bookingsDTO = _mapper.Map<IEnumerable<Booking>, IEnumerable<BookingDTO>>(bookings);
+            var bookingsDTO = _mapper.Map<IEnumerable<Booking>, IEnumerable<BookingWithIdsDTO>>(bookings);
             return Ok(bookingsDTO);
         }
         catch (Exception e)
@@ -70,13 +70,14 @@ public class BookingController : Controller
     }
 
     [HttpPost(nameof(CreateBooking))]
-    public async Task<IActionResult> CreateBooking([FromBody] BookingDTO entityDTO, CancellationToken token)
+    public async Task<IActionResult> CreateBooking([FromBody] BookingWithIdsDTO entityWithIdsDto,
+        CancellationToken token)
     {
         try
         {
-            var entity = _mapper.Map<BookingDTO, Booking>(entityDTO);
+            var entity = _mapper.Map<BookingWithIdsDTO, Booking>(entityWithIdsDto);
             var newEntity = await _service.CreateAsync(entity, token);
-            var newEntityDTO = _mapper.Map<Booking, BookingDTO>(newEntity);
+            var newEntityDTO = _mapper.Map<Booking, BookingWithIdsDTO>(newEntity);
             return Ok(newEntityDTO);
         }
         catch (Exception e)
@@ -87,13 +88,14 @@ public class BookingController : Controller
     }
 
     [HttpPatch(nameof(UpdateBooking))]
-    public async Task<IActionResult> UpdateBooking([FromBody] BookingDTO entityDTO, CancellationToken token)
+    public async Task<IActionResult> UpdateBooking([FromBody] BookingWithIdsDTO entityWithIdsDto,
+        CancellationToken token)
     {
         try
         {
-            var entity = _mapper.Map<BookingDTO, Booking>(entityDTO);
+            var entity = _mapper.Map<BookingWithIdsDTO, Booking>(entityWithIdsDto);
             var updatedEntity = await _service.UpdateAsync(entity, token);
-            var updatedEntityDTO = _mapper.Map<Booking, BookingDTO>(updatedEntity);
+            var updatedEntityDTO = _mapper.Map<Booking, BookingWithIdsDTO>(updatedEntity);
             return Ok(updatedEntityDTO);
         }
         catch (Exception e)

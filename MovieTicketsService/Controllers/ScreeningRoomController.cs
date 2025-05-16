@@ -29,7 +29,7 @@ public class ScreeningRoomController : Controller
         try
         {
             var screeningRoom = await _service.GetAsync(id, token);
-            var screeningRoomDTO = _mapper.Map<ScreeningRoom, ScreeningRoomDTO>(screeningRoom);
+            var screeningRoomDTO = _mapper.Map<ScreeningRoom, ScreeningRoomFullDTO>(screeningRoom);
             return Ok(screeningRoomDTO);
         }
         catch (Exception e)
@@ -46,7 +46,7 @@ public class ScreeningRoomController : Controller
         {
             var screeningRooms = await _service.GetAllAsync(token);
             var screeningRoomsDTO =
-                _mapper.Map<IEnumerable<ScreeningRoom>, IEnumerable<ScreeningRoomDTO>>(screeningRooms);
+                _mapper.Map<IEnumerable<ScreeningRoom>, IEnumerable<ScreeningRoomWithIdsDTO>>(screeningRooms);
             return Ok(screeningRoomsDTO);
         }
         catch (Exception e)
@@ -72,13 +72,14 @@ public class ScreeningRoomController : Controller
     }
 
     [HttpPost(nameof(CreateScreeningRoom))]
-    public async Task<IActionResult> CreateScreeningRoom([FromBody] ScreeningRoomDTO entityDTO, CancellationToken token)
+    public async Task<IActionResult> CreateScreeningRoom([FromBody] ScreeningRoomWithIdsDTO entityWithIdsDto,
+        CancellationToken token)
     {
         try
         {
-            var entity = _mapper.Map<ScreeningRoomDTO, ScreeningRoom>(entityDTO);
+            var entity = _mapper.Map<ScreeningRoomWithIdsDTO, ScreeningRoom>(entityWithIdsDto);
             var newEntity = await _service.CreateAsync(entity, token);
-            var newEntityDTO = _mapper.Map<ScreeningRoom, ScreeningRoomDTO>(newEntity);
+            var newEntityDTO = _mapper.Map<ScreeningRoom, ScreeningRoomWithIdsDTO>(newEntity);
             return Ok(newEntityDTO);
         }
         catch (Exception e)
@@ -89,13 +90,14 @@ public class ScreeningRoomController : Controller
     }
 
     [HttpPatch(nameof(UpdateScreeningRoom))]
-    public async Task<IActionResult> UpdateScreeningRoom([FromBody] ScreeningRoomDTO entityDTO, CancellationToken token)
+    public async Task<IActionResult> UpdateScreeningRoom([FromBody] ScreeningRoomWithIdsDTO entityWithIdsDto,
+        CancellationToken token)
     {
         try
         {
-            var entity = _mapper.Map<ScreeningRoomDTO, ScreeningRoom>(entityDTO);
+            var entity = _mapper.Map<ScreeningRoomWithIdsDTO, ScreeningRoom>(entityWithIdsDto);
             var updatedEntity = await _service.UpdateAsync(entity, token);
-            var updatedEntityDTO = _mapper.Map<ScreeningRoom, ScreeningRoomDTO>(updatedEntity);
+            var updatedEntityDTO = _mapper.Map<ScreeningRoom, ScreeningRoomWithIdsDTO>(updatedEntity);
             return Ok(updatedEntityDTO);
         }
         catch (Exception e)

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MovieTicketsService.Repository;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MovieTicketsService.Migrations
 {
     [DbContext(typeof(MovieTicketsContext))]
-    partial class MovieTicketsContextModelSnapshot : ModelSnapshot
+    [Migration("20250516181753_FixingLogic")]
+    partial class FixingLogic
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,10 +31,10 @@ namespace MovieTicketsService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("MovieShowId")
+                    b.Property<Guid>("MovieShowUUID")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("SeatId")
+                    b.Property<Guid>("SeatUUID")
                         .HasColumnType("uuid");
 
                     b.Property<int>("Status")
@@ -44,9 +47,9 @@ namespace MovieTicketsService.Migrations
 
                     b.HasKey("UUID");
 
-                    b.HasIndex("MovieShowId");
+                    b.HasIndex("MovieShowUUID");
 
-                    b.HasIndex("SeatId");
+                    b.HasIndex("SeatUUID");
 
                     b.ToTable("Bookings");
                 });
@@ -66,7 +69,7 @@ namespace MovieTicketsService.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
 
-                    b.Property<Guid>("ScreeningRoomId")
+                    b.Property<Guid>("ScreeningRoomUUID")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("StartTime")
@@ -74,7 +77,7 @@ namespace MovieTicketsService.Migrations
 
                     b.HasKey("UUID");
 
-                    b.HasIndex("ScreeningRoomId");
+                    b.HasIndex("ScreeningRoomUUID");
 
                     b.ToTable("MovieShows");
                 });
@@ -93,12 +96,12 @@ namespace MovieTicketsService.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<Guid>("TheaterId")
+                    b.Property<Guid>("TheaterUUID")
                         .HasColumnType("uuid");
 
                     b.HasKey("UUID");
 
-                    b.HasIndex("TheaterId");
+                    b.HasIndex("TheaterUUID");
 
                     b.ToTable("ScreeningRooms");
                 });
@@ -112,7 +115,7 @@ namespace MovieTicketsService.Migrations
                     b.Property<int>("RowNumber")
                         .HasColumnType("integer");
 
-                    b.Property<Guid>("ScreeningRoomId")
+                    b.Property<Guid>("ScreeningRoomUUID")
                         .HasColumnType("uuid");
 
                     b.Property<int>("SeatNumber")
@@ -120,7 +123,7 @@ namespace MovieTicketsService.Migrations
 
                     b.HasKey("UUID");
 
-                    b.HasIndex("ScreeningRoomId");
+                    b.HasIndex("ScreeningRoomUUID");
 
                     b.ToTable("Seats");
                 });
@@ -155,13 +158,13 @@ namespace MovieTicketsService.Migrations
                 {
                     b.HasOne("MovieTicketsService.Entities.MovieShow", "MovieShow")
                         .WithMany("Bookings")
-                        .HasForeignKey("MovieShowId")
+                        .HasForeignKey("MovieShowUUID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MovieTicketsService.Entities.Seat", "Seat")
                         .WithMany("Bookings")
-                        .HasForeignKey("SeatId")
+                        .HasForeignKey("SeatUUID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -174,7 +177,7 @@ namespace MovieTicketsService.Migrations
                 {
                     b.HasOne("MovieTicketsService.Entities.ScreeningRoom", "ScreeningRoom")
                         .WithMany("MovieShows")
-                        .HasForeignKey("ScreeningRoomId")
+                        .HasForeignKey("ScreeningRoomUUID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -185,7 +188,7 @@ namespace MovieTicketsService.Migrations
                 {
                     b.HasOne("MovieTicketsService.Entities.Theater", "Theater")
                         .WithMany("ScreeningRooms")
-                        .HasForeignKey("TheaterId")
+                        .HasForeignKey("TheaterUUID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -196,7 +199,7 @@ namespace MovieTicketsService.Migrations
                 {
                     b.HasOne("MovieTicketsService.Entities.ScreeningRoom", "ScreeningRoom")
                         .WithMany("Seats")
-                        .HasForeignKey("ScreeningRoomId")
+                        .HasForeignKey("ScreeningRoomUUID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
