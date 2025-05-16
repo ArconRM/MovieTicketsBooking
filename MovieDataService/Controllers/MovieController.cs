@@ -141,6 +141,7 @@ public class MovieController : Controller
             }
 
             using var stream = file.OpenReadStream();
+
             var movies = await _fromFileEntitySaverService.SaveFromStreamAsync(stream, token);
             return Ok(movies);
         }

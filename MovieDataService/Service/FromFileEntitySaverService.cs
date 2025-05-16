@@ -1,4 +1,6 @@
 using System.Collections.Concurrent;
+using AutoMapper;
+using Common.DTO.MovieData;
 using MovieDataService.Entities;
 using MovieDataService.Service.Interfaces;
 using Newtonsoft.Json;
@@ -11,17 +13,24 @@ public class FromFileEntitySaverService : IFromFileEntitySaverService
 
     private readonly IServiceScopeFactory _serviceScopeFactory;
 
-    public FromFileEntitySaverService(IMovieService movieService, IServiceScopeFactory serviceScopeFactory)
+    private readonly IMapper _mapper;
+
+    public FromFileEntitySaverService(
+        IMovieService movieService,
+        IServiceScopeFactory serviceScopeFactory,
+        IMapper mapper)
     {
         _movieService = movieService;
         _serviceScopeFactory = serviceScopeFactory;
+        _mapper = mapper;
     }
 
     public async Task<ICollection<Movie>> SaveFromStreamAsync(Stream stream, CancellationToken token)
     {
         using StreamReader streamReader = new(stream);
         string json = streamReader.ReadToEnd();
-        List<Movie> movies = JsonConvert.DeserializeObject<List<Movie>>(json);
+        List<MovieWithIdsDTO> moviesDTO = JsonConvert.DeserializeObject<List<MovieWithIdsDTO>>(json);
+        List<Movie> movies = _mapper.Map<List<MovieWithIdsDTO>, List<Movie>>(moviesDTO);
 
         int count = 0;
         ConcurrentBag<Movie> savedMoviesBag = new();
