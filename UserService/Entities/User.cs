@@ -1,3 +1,4 @@
+using Common.Enums;
 using Core.Interfaces;
 
 namespace UserService.Entities;
@@ -11,4 +12,6 @@ public class User : IEntityWithUUID
     public string PhoneNumber { get; set; }
 
     public string Email { get; set; }
+
+    public UserStatus Status { get; set; }
 }

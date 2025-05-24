@@ -50,11 +50,12 @@ public class MovieController : Controller
     }
 
     [HttpGet(nameof(GetMoviesByGenre))]
-    public async Task<IActionResult> GetMoviesByGenre(Guid genreId, CancellationToken token)
+    public async Task<IActionResult> GetMoviesByGenre(Guid genreId, int pageNumber, int pageSize,
+        CancellationToken token)
     {
         try
         {
-            var movies = await _movieService.GetMoviesByGenreAsync(genreId, token);
+            var movies = await _movieService.GetMoviesByGenreAsync(genreId, pageNumber, pageSize, token);
             var moviesDTO = _mapper.Map<IEnumerable<Movie>, IEnumerable<MovieDisplayDTO>>(movies);
             return Ok(moviesDTO);
         }

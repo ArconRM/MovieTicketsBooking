@@ -1,3 +1,4 @@
+using Common.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UserService.Entities;
@@ -24,5 +25,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.Email)
             .IsRequired()
             .HasMaxLength(255);
+
+        builder.Property(u => u.Status)
+            .IsRequired()
+            .HasSentinel(UserStatus.Active);
     }
 }

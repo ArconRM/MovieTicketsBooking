@@ -5,7 +5,6 @@ using MovieDataService.Entities;
 
 namespace MovieDataService.AutoMapper;
 
-//TODO: список сущностей с только гуидниками
 public class MappingProfile : Profile
 {
     public MappingProfile()

@@ -14,7 +14,8 @@ public class MovieRepository : BaseRepository<Movie>, IMovieRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Movie>> GetMoviesByGenreAsync(Guid genreUUID, CancellationToken token)
+    public async Task<IEnumerable<Movie>> GetMoviesByGenreAsync(Guid genreUUID, int pageNumber, int pageSize,
+        CancellationToken token)
     {
         DbSet<Movie> set = _context.Set<Movie>();
         List<Movie> result = await set
@@ -23,6 +24,8 @@ public class MovieRepository : BaseRepository<Movie>, IMovieRepository
                 .Select(g => g.UUID)
                 .Contains(genreUUID)
             )
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
             .ToListAsync();
         return result;
     }

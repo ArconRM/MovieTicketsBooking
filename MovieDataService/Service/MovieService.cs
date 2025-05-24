@@ -15,8 +15,9 @@ public class MovieService : BaseService<Movie>, IMovieService
         _repository = repository;
     }
 
-    public async Task<IEnumerable<Movie>> GetMoviesByGenreAsync(Guid genreUUID, CancellationToken token)
+    public async Task<IEnumerable<Movie>> GetMoviesByGenreAsync(Guid genreUUID, int pageNumber, int pageSize,
+        CancellationToken token)
     {
-        return await _repository.GetMoviesByGenreAsync(genreUUID, token);
+        return await _repository.GetMoviesByGenreAsync(genreUUID, pageNumber, pageSize, token);
     }
 }
