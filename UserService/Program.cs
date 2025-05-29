@@ -2,12 +2,17 @@ using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using UserService.AutoMapper;
 using UserService.Entities;
+using UserService.Extensions;
+using UserService.GrpcServices;
 using UserService.Repository;
 using UserService.Service.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.WebHost.ConfigureKestrelWithOptions();
+
 builder.Services.AddControllers();
+builder.Services.AddGrpc();
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -32,4 +37,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.MapControllers();
+
+app.MapGrpcService<UserGrpcService>();
+
 app.Run();

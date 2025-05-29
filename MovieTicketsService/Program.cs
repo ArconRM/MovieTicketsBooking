@@ -1,5 +1,6 @@
 using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using MovieTicketsService;
 using MovieTicketsService.AutoMapper;
 using MovieTicketsService.Entities;
 using MovieTicketsService.Repository;
@@ -7,6 +8,9 @@ using MovieTicketsService.Service;
 using MovieTicketsService.Service.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddGrpc();
+builder.Services.AddGrpcClients(builder.Configuration);
 
 builder.Services.AddControllers();
 // Add services to the container.
@@ -43,6 +47,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.MapControllers();
 app.Run();

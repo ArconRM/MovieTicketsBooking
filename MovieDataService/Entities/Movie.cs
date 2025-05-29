@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using Core.Interfaces;
 
 namespace MovieDataService.Entities;

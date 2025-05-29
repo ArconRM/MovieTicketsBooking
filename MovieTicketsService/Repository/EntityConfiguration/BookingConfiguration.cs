@@ -21,7 +21,7 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
 
         builder
             .HasOne(b => b.Seat)
-            .WithMany(s => s.Bookings)
+            .WithMany()
             .HasForeignKey(b => b.SeatId);
 
         builder.Property(b => b.UserUUID)

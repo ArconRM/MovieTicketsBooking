@@ -13,6 +13,4 @@ public class Seat : IEntityWithUUID
     public int RowNumber { get; set; }
 
     public int SeatNumber { get; set; }
-
-    public List<Booking> Bookings { get; set; }
 }
