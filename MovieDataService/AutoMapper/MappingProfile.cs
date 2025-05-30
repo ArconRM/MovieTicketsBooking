@@ -15,11 +15,11 @@ public class MappingProfile : Profile
         CreateMap<MovieWithIdsDTO, Movie>()
             .ForMember(
                 dest => dest.Genres,
-                opt => opt.MapFrom(src => src.GenresIds.Select(u => new Genre() { UUID = u }))
+                opt => opt.MapFrom(src => src.GenresUUIDs.Select(u => new Genre() { UUID = u }))
             )
             .ForMember(
                 dest => dest.Actors,
-                opt => opt.MapFrom(src => src.ActorsIds.Select(u => new Actor() { UUID = u }))
+                opt => opt.MapFrom(src => src.ActorsUUIDs.Select(u => new Actor() { UUID = u }))
             )
             .ReverseMap();
 

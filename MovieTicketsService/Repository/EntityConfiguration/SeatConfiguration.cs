@@ -16,7 +16,7 @@ public class SeatConfiguration : IEntityTypeConfiguration<Seat>
         builder
             .HasOne(s => s.ScreeningRoom)
             .WithMany(sr => sr.Seats)
-            .HasForeignKey(sr => sr.ScreeningRoomId);
+            .HasForeignKey(sr => sr.ScreeningRoomUUID);
 
         builder.Property(s => s.RowNumber)
             .IsRequired();

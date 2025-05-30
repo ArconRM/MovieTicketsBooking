@@ -1,4 +1,5 @@
 using AutoMapper;
+using Common.Enums;
 using Common.Protos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,8 +23,9 @@ public class TestController : Controller
     [HttpGet("Test")]
     public async Task<ActionResult> Test(Guid id)
     {
-        User user = await _userServiceClient.GetByIdAsync(new UuidQuery() { Uuid = id.ToString() });
-
-        return Ok(user);
+        GetUserStatusResponse? response =
+            await _userServiceClient.GetUserStatusAsync(new GetUserStatusRequest() { UserId = id.ToString() });
+        UserStatus userStatus = (UserStatus)response.Status;
+        return Ok(userStatus);
     }
 }

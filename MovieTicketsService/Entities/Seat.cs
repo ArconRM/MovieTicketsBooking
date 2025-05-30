@@ -6,7 +6,7 @@ public class Seat : IEntityWithUUID
 {
     public Guid UUID { get; set; }
 
-    public Guid ScreeningRoomId { get; set; }
+    public Guid ScreeningRoomUUID { get; set; }
 
     public ScreeningRoom ScreeningRoom { get; set; }
 

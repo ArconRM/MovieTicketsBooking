@@ -8,7 +8,7 @@ public class MovieShow : IEntityWithUUID
 
     public Guid MovieUUID { get; set; }
 
-    public Guid ScreeningRoomId { get; set; }
+    public Guid ScreeningRoomUUID { get; set; }
 
     public ScreeningRoom ScreeningRoom { get; set; }
 

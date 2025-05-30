@@ -17,15 +17,20 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
         builder
             .HasOne(b => b.MovieShow)
             .WithMany(m => m.Bookings)
-            .HasForeignKey(b => b.MovieShowId);
+            .HasForeignKey(b => b.MovieShowUUID);
 
         builder
             .HasOne(b => b.Seat)
             .WithMany()
-            .HasForeignKey(b => b.SeatId);
+            .HasForeignKey(b => b.SeatUUID);
 
         builder.Property(b => b.UserUUID)
             .IsRequired();
+
+        builder.Property(b => b.Discount)
+            .IsRequired()
+            .HasSentinel(0)
+            .HasDefaultValue(0);
 
         builder.Property(b => b.Status)
             .IsRequired()

@@ -5,25 +5,19 @@ option csharp_namespace = "Common.Protos";
 import "google/protobuf/empty.proto";
 
 service UserService {
-  rpc Create(User) returns (User);
-  rpc GetById(UuidQuery) returns (User);
-  rpc Get(UuidsQuery) returns (stream User);
-  rpc GetAll(google.protobuf.Empty) returns (stream User);
-  rpc Delete(UuidQuery) returns (google.protobuf.Empty);
+  rpc GetUserStatus(GetUserStatusRequest) returns (GetUserStatusResponse);
+  rpc UpdateUserStatus(UpdateUserStatusRequest) returns (google.protobuf.Empty);
 }
 
-message User {
-  string uuid = 1;
-  string fullName = 2;
-  string phoneNumber = 3;
-  string email = 4;
-  int32 status = 5;
+message GetUserStatusRequest {
+  string user_id = 1;
 }
 
-message UuidQuery {
-  string uuid = 1;
+message GetUserStatusResponse {
+  int32 status = 1;
 }
 
-message UuidsQuery {
-  repeated string uuids = 1;
+message UpdateUserStatusRequest {
+  string user_id = 1;
+  int32 status = 2;
 }

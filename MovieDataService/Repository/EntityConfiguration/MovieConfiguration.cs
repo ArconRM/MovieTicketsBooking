@@ -23,8 +23,8 @@ public class MovieConfiguration : IEntityTypeConfiguration<Movie>
 
         builder
             .HasOne(m => m.Producer)
-            .WithMany()
-            .HasForeignKey(m => m.ProducerId);
+            .WithMany(p => p.Movies)
+            .HasForeignKey(m => m.ProducerUUID);
 
         builder
             .HasMany(m => m.Actors)

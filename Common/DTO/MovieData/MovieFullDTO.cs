@@ -2,7 +2,8 @@ using Core.Interfaces;
 
 namespace Common.DTO.MovieData;
 
-public class MovieFullDTO : IEntityWithUUID
+public class
+    MovieFullDTO : IEntityWithUUID
 {
     public Guid UUID { get; set; }
 

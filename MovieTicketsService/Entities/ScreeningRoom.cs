@@ -6,7 +6,7 @@ public class ScreeningRoom : IEntityWithUUID
 {
     public Guid UUID { get; set; }
 
-    public Guid TheaterId { get; set; }
+    public Guid TheaterUUID { get; set; }
 
     public Theater Theater { get; set; }
 

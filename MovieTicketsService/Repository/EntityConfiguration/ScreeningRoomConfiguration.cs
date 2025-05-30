@@ -16,7 +16,7 @@ public class ScreeningRoomConfiguration : IEntityTypeConfiguration<ScreeningRoom
         builder
             .HasOne(sr => sr.Theater)
             .WithMany(t => t.ScreeningRooms)
-            .HasForeignKey(sr => sr.TheaterId);
+            .HasForeignKey(sr => sr.TheaterUUID);
 
         builder.Property(sr => sr.Name)
             .IsRequired()

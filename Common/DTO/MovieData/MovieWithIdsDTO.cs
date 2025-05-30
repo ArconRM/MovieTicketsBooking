@@ -6,11 +6,11 @@ public class MovieWithIdsDTO
 
     public string Title { get; set; }
 
-    public List<Guid> GenresIds { get; set; }
+    public List<Guid> GenresUUIDs { get; set; }
 
-    public Guid ProducerId { get; set; }
+    public Guid ProducerUUID { get; set; }
 
-    public List<Guid> ActorsIds { get; set; }
+    public List<Guid> ActorsUUIDs { get; set; }
 
     public string? Description { get; set; }
 

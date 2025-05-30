@@ -19,7 +19,7 @@ public class MovieShowConfiguration : IEntityTypeConfiguration<MovieShow>
         builder
             .HasOne(ms => ms.ScreeningRoom)
             .WithMany(sr => sr.MovieShows)
-            .HasForeignKey(ms => ms.ScreeningRoomId);
+            .HasForeignKey(ms => ms.ScreeningRoomUUID);
 
         builder.Property(ms => ms.StartTime)
             .IsRequired();

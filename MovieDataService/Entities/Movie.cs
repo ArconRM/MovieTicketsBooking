@@ -10,7 +10,7 @@ public class Movie : IEntityWithUUID
 
     public List<Genre> Genres { get; set; }
 
-    public Guid ProducerId { get; set; }
+    public Guid ProducerUUID { get; set; }
     public Producer Producer { get; set; }
 
     public List<Actor> Actors { get; set; }
