@@ -27,10 +27,8 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
         builder.Property(b => b.UserUUID)
             .IsRequired();
 
-        builder.Property(b => b.Discount)
-            .IsRequired()
-            .HasSentinel(0)
-            .HasDefaultValue(0);
+        builder.Property(b => b.TotalPrice)
+            .IsRequired();
 
         builder.Property(b => b.Status)
             .IsRequired()

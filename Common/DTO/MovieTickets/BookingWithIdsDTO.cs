@@ -13,7 +13,7 @@ public class BookingWithIdsDTO : IEntityWithUUID
 
     public Guid UserUUID { get; set; }
 
-    public double? Discount { get; set; }
+    public double TotalPrice { get; set; }
 
     public BookingStatus Status { get; set; }
 }

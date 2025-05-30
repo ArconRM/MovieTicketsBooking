@@ -25,6 +25,22 @@ public class BookingService : BaseService<Booking>, IBookingService
         GetUserStatusResponse response = await _userServiceClient.GetUserStatusAsync(new GetUserStatusRequest()
             { UserId = entity.UserUUID.ToString() });
         UserStatus userStatus = (UserStatus)response.Status;
+        switch (userStatus)
+        {
+            case UserStatus.Banned:
+            case UserStatus.Suspended:
+                throw new InvalidOperationException("User is not allowed to create bookings.");
+
+            case UserStatus.Inactive:
+            case UserStatus.Active:
+                break;
+
+            case UserStatus.New:
+            case UserStatus.Vip:
+                entity.TotalPrice *= 0.8;
+                break;
+        }
+
         return await _repository.CreateAsync(entity, token);
     }
 }

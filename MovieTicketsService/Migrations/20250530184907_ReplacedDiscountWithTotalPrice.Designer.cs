@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MovieTicketsService.Repository;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MovieTicketsService.Migrations
 {
     [DbContext(typeof(MovieTicketsContext))]
-    partial class MovieTicketsContextModelSnapshot : ModelSnapshot
+    [Migration("20250530184907_ReplacedDiscountWithTotalPrice")]
+    partial class ReplacedDiscountWithTotalPrice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,7 +54,7 @@ namespace MovieTicketsService.Migrations
 
                     b.HasIndex("SeatUUID");
 
-                    b.ToTable("Bookings", (string)null);
+                    b.ToTable("Bookings");
                 });
 
             modelBuilder.Entity("MovieTicketsService.Entities.MovieShow", b =>
@@ -79,7 +82,7 @@ namespace MovieTicketsService.Migrations
 
                     b.HasIndex("ScreeningRoomUUID");
 
-                    b.ToTable("MovieShows", (string)null);
+                    b.ToTable("MovieShows");
                 });
 
             modelBuilder.Entity("MovieTicketsService.Entities.ScreeningRoom", b =>
@@ -103,7 +106,7 @@ namespace MovieTicketsService.Migrations
 
                     b.HasIndex("TheaterUUID");
 
-                    b.ToTable("ScreeningRooms", (string)null);
+                    b.ToTable("ScreeningRooms");
                 });
 
             modelBuilder.Entity("MovieTicketsService.Entities.Seat", b =>
@@ -125,7 +128,7 @@ namespace MovieTicketsService.Migrations
 
                     b.HasIndex("ScreeningRoomUUID");
 
-                    b.ToTable("Seats", (string)null);
+                    b.ToTable("Seats");
                 });
 
             modelBuilder.Entity("MovieTicketsService.Entities.Theater", b =>
@@ -151,7 +154,7 @@ namespace MovieTicketsService.Migrations
 
                     b.HasKey("UUID");
 
-                    b.ToTable("Theaters", (string)null);
+                    b.ToTable("Theaters");
                 });
 
             modelBuilder.Entity("MovieTicketsService.Entities.Booking", b =>
