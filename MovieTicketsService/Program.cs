@@ -1,11 +1,15 @@
 using Core.Interfaces;
+using EventsService.Interfaces;
+using EventsService.RabbitMQ;
 using Microsoft.EntityFrameworkCore;
 using MovieTicketsService;
 using MovieTicketsService.AutoMapper;
 using MovieTicketsService.Entities;
+using MovieTicketsService.EventHandling;
 using MovieTicketsService.Repository;
 using MovieTicketsService.Service;
 using MovieTicketsService.Service.Interfaces;
+using RabbitMQ.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +36,21 @@ builder.Services.AddScoped<ISeatService, SeatService>();
 
 builder.Services.AddScoped<IRepository<Theater>, TheaterRepository>();
 builder.Services.AddScoped<ITheaterService, TheaterService>();
+
+builder.Services.AddSingleton<IConnection>(_ =>
+{
+    var factory = new ConnectionFactory
+    {
+        HostName = "localhost"
+    };
+    return factory.CreateConnectionAsync().Result;
+});
+
+builder.Services.AddSingleton<IEventPublisher, RabbitMqEventPublisher>();
+builder.Services.AddSingleton<IEventSubscriber, RabbitMqEventSubscriber>();
+
+builder.Services.AddSingleton<UserSuspendedOrBannedEventHandler>();
+builder.Services.AddHostedService<UserSuspendedOrBannedEventBackgroundService>();
 
 builder.Services.AddDbContext<MovieTicketsContext>(options =>
     options.UseNpgsql(builder.Configuration.GetSection("ConnectionString").Value));

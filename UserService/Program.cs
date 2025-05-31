@@ -1,5 +1,8 @@
 using Core.Interfaces;
+using EventsService.Interfaces;
+using EventsService.RabbitMQ;
 using Microsoft.EntityFrameworkCore;
+using RabbitMQ.Client;
 using UserService.AutoMapper;
 using UserService.Entities;
 using UserService.Extensions;
@@ -20,6 +23,18 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IRepository<User>, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService.Service.UserService>();
+
+builder.Services.AddSingleton<IConnection>(_ =>
+{
+    var factory = new ConnectionFactory
+    {
+        HostName = "localhost"
+    };
+    return factory.CreateConnectionAsync().Result;
+});
+
+builder.Services.AddSingleton<IEventPublisher, RabbitMqEventPublisher>();
+builder.Services.AddSingleton<IEventSubscriber, RabbitMqEventSubscriber>();
 
 builder.Services.AddDbContext<UserContext>(options =>
     options.UseNpgsql(builder.Configuration.GetSection("ConnectionString").Value));
