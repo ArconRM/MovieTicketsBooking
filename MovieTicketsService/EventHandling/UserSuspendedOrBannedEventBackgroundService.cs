@@ -1,5 +1,6 @@
 using EventsService.Events;
 using EventsService.Interfaces;
+using Grpc.Net.Client.Balancer;
 
 namespace MovieTicketsService.EventHandling;
 
@@ -17,6 +18,8 @@ public class UserSuspendedOrBannedEventBackgroundService : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken token)
     {
+        await _subscriber.InitializeAsync(token);
+
         await _subscriber.SubscribeAsync<UserSuspendedOrBannedEvent>(
             queueName: "notification.user.suspended-or-banned",
             routingKey: "user.suspended-or-banned",

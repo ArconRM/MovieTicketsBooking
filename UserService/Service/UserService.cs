@@ -1,3 +1,4 @@
+using Common.Enums;
 using Core.BaseEntities;
 using Core.Interfaces;
 using EventsService.Events;
@@ -18,10 +19,14 @@ public class UserService : BaseService<User>, IUserService
         _eventPublisher = eventPublisher;
     }
 
-    public async Task<User> GetAsync(Guid id, CancellationToken token)
+    public async Task<User> UpdateAsync(User entity, CancellationToken token)
     {
-        var evt = new UserSuspendedOrBannedEvent { UserUUID = id };
-        await _eventPublisher.PublishAsync(evt, "user.suspended-or-banned", token);
-        return await _repository.GetAsync(id, token);
+        if (entity.Status is UserStatus.Banned or UserStatus.Suspended)
+        {
+            var evt = new UserSuspendedOrBannedEvent { UserUUID = entity.UUID };
+            await _eventPublisher.PublishAsync(evt, "user.suspended-or-banned", token);
+        }
+
+        return await _repository.UpdateAsync(entity, token);
     }
 }
