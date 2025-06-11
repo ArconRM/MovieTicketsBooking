@@ -3,17 +3,18 @@ using Common.Protos;
 using Core.BaseEntities;
 using Core.Interfaces;
 using MovieTicketsService.Entities;
+using MovieTicketsService.Repository.Interfaces;
 using MovieTicketsService.Service.Interfaces;
 
 namespace MovieTicketsService.Service;
 
 public class BookingService : BaseService<Booking>, IBookingService
 {
-    private readonly IRepository<Booking> _repository;
+    private readonly IBookingRepository _repository;
 
     private readonly UserService.UserServiceClient _userServiceClient;
 
-    public BookingService(IRepository<Booking> repository, UserService.UserServiceClient userServiceClient) :
+    public BookingService(IBookingRepository repository, UserService.UserServiceClient userServiceClient) :
         base(repository)
     {
         _repository = repository;
@@ -42,5 +43,10 @@ public class BookingService : BaseService<Booking>, IBookingService
         }
 
         return await _repository.CreateAsync(entity, token);
+    }
+
+    public async Task<IEnumerable<Booking>> GetByUserUUIDAsync(Guid clientUUID, CancellationToken token)
+    {
+        return await _repository.GetByUserUUIDAsync(clientUUID, token);
     }
 }

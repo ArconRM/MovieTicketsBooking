@@ -5,4 +5,5 @@ namespace MovieTicketsService.Repository.Interfaces;
 
 public interface IBookingRepository : IRepository<Booking>
 {
+    Task<IEnumerable<Booking>> GetByUserUUIDAsync(Guid clientUUID, CancellationToken token);
 }

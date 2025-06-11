@@ -19,7 +19,7 @@ public class RabbitMqEventSubscriber : IEventSubscriber
     public async Task SubscribeAsync<T>(
         string queueName,
         string routingKey,
-        Func<T, Task> handler,
+        Func<T, CancellationToken, Task> handler,
         CancellationToken token)
     {
         var connection = await _provider.GetConnectionAsync(token);
@@ -34,7 +34,7 @@ public class RabbitMqEventSubscriber : IEventSubscriber
         {
             var body = Encoding.UTF8.GetString(ea.Body.ToArray());
             var @event = JsonConvert.DeserializeObject<T>(body);
-            await handler(@event);
+            await handler(@event, token);
         };
 
         await channel.BasicConsumeAsync(queueName, autoAck: true, consumer: consumer, cancellationToken: token);
