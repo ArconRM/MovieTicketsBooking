@@ -8,21 +8,20 @@ namespace MovieTicketsService;
 public class MovieTicketsBackgroundService : BackgroundService
 {
     private readonly IEventSubscriber _subscriber;
-    private readonly IServiceProvider _serviceProvider;
+    private readonly IServiceScopeFactory _serviceScopeFactory;
 
     public MovieTicketsBackgroundService(IEventSubscriber subscriber,
-        IServiceProvider serviceProvider)
+        IServiceScopeFactory serviceScopeFactory)
     {
         _subscriber = subscriber;
-        _serviceProvider = serviceProvider;
+        _serviceScopeFactory = serviceScopeFactory;
     }
 
     protected override async Task ExecuteAsync(CancellationToken token)
     {
-        using var scope = _serviceProvider.CreateScope();
-
-        var userSuspendedOrBannedEventHandler = scope.ServiceProvider
-            .GetRequiredService<UserSuspendedOrBannedEventHandler>();
+        using IServiceScope scope = _serviceScopeFactory.CreateScope();
+        var provider = scope.ServiceProvider;
+        var userSuspendedOrBannedEventHandler = provider.GetRequiredService<UserSuspendedOrBannedEventHandler>();
 
         await _subscriber.SubscribeAsync<UserSuspendedOrBannedEvent>(
             queueName: "notification.user.suspended-or-banned",
