@@ -1,11 +1,17 @@
 using Core.Interfaces;
+using EventsService.Interfaces;
+using EventsService.RabbitMQ;
+using EventsService.RabbitMQ.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using MovieTicketsService;
 using MovieTicketsService.AutoMapper;
 using MovieTicketsService.Entities;
+using MovieTicketsService.EventHandling;
 using MovieTicketsService.Repository;
+using MovieTicketsService.Repository.Interfaces;
 using MovieTicketsService.Service;
 using MovieTicketsService.Service.Interfaces;
+using RabbitMQ.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,20 +24,28 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IRepository<Booking>, BookingRepository>();
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 builder.Services.AddScoped<IBookingService, BookingService>();
 
-builder.Services.AddScoped<IRepository<MovieShow>, MovieShowRepository>();
+builder.Services.AddScoped<IMovieShowRepository, MovieShowRepository>();
 builder.Services.AddScoped<IMovieShowService, MovieShowService>();
 
-builder.Services.AddScoped<IRepository<ScreeningRoom>, ScreeningRoomRepository>();
+builder.Services.AddScoped<IScreeningRoomRepository, ScreeningRoomRepository>();
 builder.Services.AddScoped<IScreeningRoomService, ScreeningRoomService>();
 
-builder.Services.AddScoped<IRepository<Seat>, SeatRepository>();
+builder.Services.AddScoped<ISeatRepository, SeatRepository>();
 builder.Services.AddScoped<ISeatService, SeatService>();
 
-builder.Services.AddScoped<IRepository<Theater>, TheaterRepository>();
+builder.Services.AddScoped<ITheaterRepository, TheaterRepository>();
 builder.Services.AddScoped<ITheaterService, TheaterService>();
+
+builder.Services.AddScoped<UserSuspendedOrBannedEventHandler>();
+
+builder.Services.AddSingleton<IRabbitMqConnectionProvider, RabbitMqConnectionProvider>();
+builder.Services.AddSingleton<IEventPublisher, RabbitMqEventPublisher>();
+builder.Services.AddSingleton<IEventSubscriber, RabbitMqEventSubscriber>();
+
+builder.Services.AddHostedService<MovieTicketsBackgroundService>();
 
 builder.Services.AddDbContext<MovieTicketsContext>(options =>
     options.UseNpgsql(builder.Configuration.GetSection("ConnectionString").Value));

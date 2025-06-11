@@ -24,4 +24,16 @@ public class BookingRepository : BaseRepository<Booking>, IBookingRepository
             .FirstOrDefaultAsync(b => b.UUID == id, token);
         return result;
     }
+
+    public async Task<IEnumerable<Booking>> GetByUserUUIDAsync(Guid clientUUID, CancellationToken token)
+    {
+        DbSet<Booking> set = _context.Bookings;
+        IEnumerable<Booking> result = await set
+            .AsNoTracking()
+            .Include(b => b.MovieShow)
+            .Include(b => b.Seat)
+            .Where(b => b.UserUUID == clientUUID)
+            .ToListAsync(token);
+        return result;
+    }
 }
