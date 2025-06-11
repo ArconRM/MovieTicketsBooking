@@ -1,6 +1,7 @@
 using Core.Interfaces;
 using EventsService.Interfaces;
 using EventsService.RabbitMQ;
+using EventsService.RabbitMQ.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using MovieTicketsService;
 using MovieTicketsService.AutoMapper;
@@ -37,20 +38,12 @@ builder.Services.AddScoped<ISeatService, SeatService>();
 builder.Services.AddScoped<IRepository<Theater>, TheaterRepository>();
 builder.Services.AddScoped<ITheaterService, TheaterService>();
 
-builder.Services.AddSingleton<IConnection>(_ =>
-{
-    var factory = new ConnectionFactory
-    {
-        HostName = "localhost"
-    };
-    return factory.CreateConnectionAsync().Result;
-});
-
+builder.Services.AddSingleton<IRabbitMqConnectionProvider, RabbitMqConnectionProvider>();
 builder.Services.AddSingleton<IEventPublisher, RabbitMqEventPublisher>();
 builder.Services.AddSingleton<IEventSubscriber, RabbitMqEventSubscriber>();
 
 builder.Services.AddSingleton<UserSuspendedOrBannedEventHandler>();
-builder.Services.AddHostedService<UserSuspendedOrBannedEventBackgroundService>();
+builder.Services.AddHostedService<MovieTicketsBackgroundService>();
 
 builder.Services.AddDbContext<MovieTicketsContext>(options =>
     options.UseNpgsql(builder.Configuration.GetSection("ConnectionString").Value));

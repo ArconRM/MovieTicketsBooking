@@ -1,6 +1,7 @@
 using Core.Interfaces;
 using EventsService.Interfaces;
 using EventsService.RabbitMQ;
+using EventsService.RabbitMQ.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using RabbitMQ.Client;
 using UserService.AutoMapper;
@@ -33,6 +34,7 @@ builder.Services.AddSingleton<IConnection>(_ =>
     return factory.CreateConnectionAsync().Result;
 });
 
+builder.Services.AddSingleton<IRabbitMqConnectionProvider, RabbitMqConnectionProvider>();
 builder.Services.AddSingleton<IEventPublisher, RabbitMqEventPublisher>();
 builder.Services.AddSingleton<IEventSubscriber, RabbitMqEventSubscriber>();
 
