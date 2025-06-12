@@ -1,10 +1,12 @@
+using Common.Enums;
 using EventsService.Events;
+using EventsService.Interfaces;
 using MovieTicketsService.Entities;
 using MovieTicketsService.Service.Interfaces;
 
 namespace MovieTicketsService.EventHandling;
 
-public class UserSuspendedOrBannedEventHandler
+public class UserSuspendedOrBannedEventHandler : IEventHandler<UserSuspendedOrBannedEvent>
 {
     private readonly IServiceScopeFactory _serviceScopeFactory;
 
@@ -19,12 +21,13 @@ public class UserSuspendedOrBannedEventHandler
         var prodiver = scope.ServiceProvider;
         var bookingService = prodiver.GetRequiredService<IBookingService>();
 
-        Console.WriteLine($"FUCK {@event.UserUUID}");
+        Console.WriteLine($"{@event.UserUUID} got banned");
         var userBookings = await bookingService.GetByUserUUIDAsync(@event.UserUUID, token);
-        Console.WriteLine(userBookings.Count());
         foreach (var booking in userBookings)
         {
-            Console.WriteLine(booking.UUID);
+            booking.Status = BookingStatus.Canceled;
+            await bookingService.UpdateAsync(booking, token);
+            Console.WriteLine($"{booking.UUID} is cancelled");
         }
     }
 }

@@ -1,6 +1,7 @@
 using Common.Enums;
 using Core.BaseEntities;
 using Core.Interfaces;
+using EventsService.Entities;
 using EventsService.Events;
 using EventsService.Interfaces;
 using UserService.Entities;
@@ -24,7 +25,7 @@ public class UserService : BaseService<User>, IUserService
         if (entity.Status is UserStatus.Banned or UserStatus.Suspended)
         {
             var evt = new UserSuspendedOrBannedEvent { UserUUID = entity.UUID };
-            await _eventPublisher.PublishAsync(evt, "user.suspended-or-banned", token);
+            await _eventPublisher.PublishAsync(evt, RabbitMqRoutingKeys.UserSuspendedOrBanned.Value, token);
         }
 
         return await _repository.UpdateAsync(entity, token);

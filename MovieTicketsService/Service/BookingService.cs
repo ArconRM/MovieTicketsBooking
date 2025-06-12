@@ -2,6 +2,9 @@ using Common.Enums;
 using Common.Protos;
 using Core.BaseEntities;
 using Core.Interfaces;
+using EventsService.Entities;
+using EventsService.Events;
+using EventsService.Interfaces;
 using MovieTicketsService.Entities;
 using MovieTicketsService.Repository.Interfaces;
 using MovieTicketsService.Service.Interfaces;
@@ -11,14 +14,18 @@ namespace MovieTicketsService.Service;
 public class BookingService : BaseService<Booking>, IBookingService
 {
     private readonly IBookingRepository _repository;
-
     private readonly UserService.UserServiceClient _userServiceClient;
+    private readonly IEventPublisher _eventPublisher;
 
-    public BookingService(IBookingRepository repository, UserService.UserServiceClient userServiceClient) :
+    public BookingService(
+        IBookingRepository repository,
+        UserService.UserServiceClient userServiceClient,
+        IEventPublisher eventPublisher) :
         base(repository)
     {
         _repository = repository;
         _userServiceClient = userServiceClient;
+        _eventPublisher = eventPublisher;
     }
 
     public async Task<Booking> CreateAsync(Booking entity, CancellationToken token)
@@ -43,6 +50,17 @@ public class BookingService : BaseService<Booking>, IBookingService
         }
 
         return await _repository.CreateAsync(entity, token);
+    }
+
+    public async Task<Booking> UpdateAsync(Booking entity, CancellationToken token)
+    {
+        if (entity.Status == BookingStatus.Abandoned)
+        {
+            var evt = new BookingAbandonedEvent { UserUUID = entity.UserUUID, BookingUUID = entity.UUID };
+            await _eventPublisher.PublishAsync(evt, RabbitMqRoutingKeys.BookingAbandoned.Value, token);
+        }
+
+        return await _repository.UpdateAsync(entity, token);
     }
 
     public async Task<IEnumerable<Booking>> GetByUserUUIDAsync(Guid clientUUID, CancellationToken token)

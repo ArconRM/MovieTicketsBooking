@@ -1,3 +1,4 @@
+using EventsService.Entities;
 using EventsService.Events;
 using EventsService.Interfaces;
 using Grpc.Net.Client.Balancer;
@@ -24,8 +25,8 @@ public class MovieTicketsBackgroundService : BackgroundService
         var userSuspendedOrBannedEventHandler = provider.GetRequiredService<UserSuspendedOrBannedEventHandler>();
 
         await _subscriber.SubscribeAsync<UserSuspendedOrBannedEvent>(
-            queueName: "notification.user.suspended-or-banned",
-            routingKey: "user.suspended-or-banned",
+            queueName: $"notification.{RabbitMqRoutingKeys.UserSuspendedOrBanned.Value}",
+            routingKey: RabbitMqRoutingKeys.UserSuspendedOrBanned.Value,
             handler: userSuspendedOrBannedEventHandler.HandleAsync,
             token
         );
