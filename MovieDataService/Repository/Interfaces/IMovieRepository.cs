@@ -5,6 +5,9 @@ namespace MovieDataService.Repository.Interfaces;
 
 public interface IMovieRepository : IRepository<Movie>
 {
-    Task<IEnumerable<Movie>> GetMoviesByGenreAsync(Guid genreUUID, int pageNumber, int pageSize,
+    Task<IEnumerable<Movie>> GetMoviesByGenreAsync(
+        Guid genreUUID,
+        int pageNumber,
+        int pageSize,
         CancellationToken token);
 }

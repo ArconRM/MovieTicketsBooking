@@ -1,4 +1,5 @@
 using System.Text;
+using EventsService.Entities;
 using EventsService.Interfaces;
 using EventsService.RabbitMQ.Interfaces;
 using Newtonsoft.Json;
@@ -25,9 +26,10 @@ public class RabbitMqEventSubscriber : IEventSubscriber
         var connection = await _provider.GetConnectionAsync(token);
         var channel = await connection.CreateChannelAsync(cancellationToken: token);
 
-        await channel.ExchangeDeclareAsync("app.events", ExchangeType.Topic, durable: true, cancellationToken: token);
+        await channel.ExchangeDeclareAsync(RabbitMqExchangeNames.AppEvents, ExchangeType.Topic, durable: true,
+            cancellationToken: token);
         await channel.QueueDeclareAsync(queueName, true, false, false, cancellationToken: token);
-        await channel.QueueBindAsync(queueName, "app.events", routingKey, cancellationToken: token);
+        await channel.QueueBindAsync(queueName, RabbitMqExchangeNames.AppEvents, routingKey, cancellationToken: token);
 
         var consumer = new AsyncEventingBasicConsumer(channel);
         consumer.ReceivedAsync += async (_, ea) =>

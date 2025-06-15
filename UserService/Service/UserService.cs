@@ -25,7 +25,7 @@ public class UserService : BaseService<User>, IUserService
         if (entity.Status is UserStatus.Banned or UserStatus.Suspended)
         {
             var evt = new UserSuspendedOrBannedEvent { UserUUID = entity.UUID };
-            await _eventPublisher.PublishAsync(evt, RabbitMqRoutingKeys.UserSuspendedOrBanned.Value, token);
+            await _eventPublisher.PublishAsync(evt, RabbitMqRoutingKeys.UserSuspendedOrBanned, token);
         }
 
         return await _repository.UpdateAsync(entity, token);

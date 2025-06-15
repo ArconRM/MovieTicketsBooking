@@ -24,8 +24,8 @@ public class UserBackgroundService : BackgroundService
         var bookingAbandonedEventHandler = provider.GetRequiredService<BookingAbandonedEventHandler>();
 
         await _subscriber.SubscribeAsync<BookingAbandonedEvent>(
-            queueName: $"notification.{RabbitMqRoutingKeys.BookingAbandoned.Value}",
-            routingKey: RabbitMqRoutingKeys.BookingAbandoned.Value,
+            queueName: $"notification.{RabbitMqRoutingKeys.BookingAbandoned}",
+            routingKey: RabbitMqRoutingKeys.BookingAbandoned,
             handler: bookingAbandonedEventHandler.HandleAsync,
             token
         );

@@ -57,7 +57,7 @@ public class BookingService : BaseService<Booking>, IBookingService
         if (entity.Status == BookingStatus.Abandoned)
         {
             var evt = new BookingAbandonedEvent { UserUUID = entity.UserUUID, BookingUUID = entity.UUID };
-            await _eventPublisher.PublishAsync(evt, RabbitMqRoutingKeys.BookingAbandoned.Value, token);
+            await _eventPublisher.PublishAsync(evt, RabbitMqRoutingKeys.BookingAbandoned, token);
         }
 
         return await _repository.UpdateAsync(entity, token);

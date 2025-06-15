@@ -2,11 +2,8 @@ using Core.Interfaces;
 
 namespace MovieDataService.Entities;
 
-//TODO!: для взаимодействия между сервисами grpc (1) + rabbitmq (потом) (не через eventmanager)
-//TODO: пагинация на фильмы по жанру почитать про пагинацию через доп таблицы
 //TODO: генерить пдфки билетов в отдельном сервисе
 //TODO: файловый сервис на стримах (доделать)
-//TODO: авторизация с IdentityDbContext
 
 public class Producer : IEntityWithUUID
 {

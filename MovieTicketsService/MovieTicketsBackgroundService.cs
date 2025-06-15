@@ -25,8 +25,8 @@ public class MovieTicketsBackgroundService : BackgroundService
         var userSuspendedOrBannedEventHandler = provider.GetRequiredService<UserSuspendedOrBannedEventHandler>();
 
         await _subscriber.SubscribeAsync<UserSuspendedOrBannedEvent>(
-            queueName: $"notification.{RabbitMqRoutingKeys.UserSuspendedOrBanned.Value}",
-            routingKey: RabbitMqRoutingKeys.UserSuspendedOrBanned.Value,
+            queueName: $"notification.{RabbitMqRoutingKeys.UserSuspendedOrBanned}",
+            routingKey: RabbitMqRoutingKeys.UserSuspendedOrBanned,
             handler: userSuspendedOrBannedEventHandler.HandleAsync,
             token
         );
