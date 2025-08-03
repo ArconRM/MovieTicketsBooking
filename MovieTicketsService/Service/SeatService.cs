@@ -14,4 +14,9 @@ public class SeatService : BaseService<Seat>, ISeatService
     {
         _repository = repository;
     }
+
+    public async Task<IEnumerable<Seat>> GetAvailableSeatsByMovieShowUuid(Guid movieShowUuid, CancellationToken token)
+    {
+        return await _repository.GetAvailableSeatsByMovieShowUuid(movieShowUuid, token);
+    }
 }

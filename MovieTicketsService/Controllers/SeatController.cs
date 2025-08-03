@@ -54,6 +54,22 @@ public class SeatController : Controller
         }
     }
 
+    [HttpGet(nameof(GetAvailableSeatsByMovieShowUuid))]
+    public async Task<IActionResult> GetAvailableSeatsByMovieShowUuid(Guid movieShowUuid, CancellationToken token)
+    {
+        try
+        {
+            var seats = await _service.GetAvailableSeatsByMovieShowUuid(movieShowUuid, token);
+            var seatsDTO = _mapper.Map<IEnumerable<Seat>, IEnumerable<SeatWithIdsDTO>>(seats);
+            return Ok(seatsDTO);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, e.Message);
+            return BadRequest(e.Message);
+        }
+    }
+
     [HttpDelete(nameof(DeleteSeat))]
     public async Task<IActionResult> DeleteSeat(Guid id, CancellationToken token)
     {
